@@ -13,7 +13,7 @@ export default function Home() {
     <div className="min-h-screen overflow-x-hidden">
       <section 
         id="hero-section" 
-        className={`relative h-screen overflow-hidden flex items-center justify-center bg-cover bg-center bg-no-repeat bg-fixed overflow-x-hidden ${expandedCard ? '' : 'px-4 sm:px-6 lg:px-8'}`}
+        className={`relative h-screen overflow-hidden flex items-center justify-center bg-center bg-no-repeat overflow-x-hidden ${expandedCard ? '' : 'px-4 sm:px-6 lg:px-8'}`}
         style={{
           backgroundImage: `url('/images/heroimage.JPG')`,
           backgroundColor: '#d9d4c7'
@@ -32,7 +32,7 @@ export default function Home() {
           <div className={`text-center mb-16 sm:mb-20 transition-all duration-700 ease-out ${expandedCard ? 'hidden' : 'opacity-100 scale-100'}`}>
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-normal tracking-tight text-black mb-6 transition-all duration-700 ease-out">
               Dorsa Wellness
-            </h1>
+          </h1>
             <p className="text-lg sm:text-xl text-black/70 max-w-2xl mx-auto font-light tracking-wide transition-all duration-700 ease-out">
               Premium personal training tailored to your goals
             </p>
@@ -337,7 +337,7 @@ export default function Home() {
                   content: (
                     <div className="bg-white rounded-lg overflow-hidden border border-black/20">
                       <div className="aspect-[4/3] relative">
-                        <Image
+            <Image
                           src="/images/review2.jpeg"
                           alt="Client Review 2"
                           fill
