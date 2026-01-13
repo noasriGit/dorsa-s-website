@@ -1,13 +1,5 @@
 @import "tailwindcss";
 
-@font-face {
-  font-family: 'Satoshi Variable';
-  src: url('/Satoshi-Variable.ttf') format('truetype');
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: swap;
-}
-
 :root {
   --background: #d9d4c7;
   --foreground: #000000;
@@ -16,7 +8,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: 'Satoshi Variable', system-ui, -apple-system, sans-serif;
+  --font-sans: 'Winky Sans', system-ui, -apple-system, sans-serif;
   --font-mono: var(--font-geist-mono);
 }
 
@@ -32,15 +24,10 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: 'Satoshi Variable', system-ui, -apple-system, sans-serif;
+  font-family: 'Winky Sans', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   max-width: 100vw;
   position: relative;
-}
-
-#hero-section {
-  background-size: cover;
-  background-position: center center;
 }

@@ -5,8 +5,6 @@ import { useState, useEffect, useRef } from 'react';
 interface CarouselItem {
   id: string;
   content: React.ReactNode;
-  imageSrc?: string;
-  onClick?: () => void;
 }
 
 interface CarouselProps {
@@ -19,7 +17,6 @@ export default function Carousel({ items, autoPlay = false, autoPlayInterval = 5
   const [currentIndex, setCurrentIndex] = useState(0);
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
-  const [expandedImage, setExpandedImage] = useState<string | null>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -140,7 +137,7 @@ export default function Carousel({ items, autoPlay = false, autoPlayInterval = 5
       {/* Carousel Container with 3D perspective */}
       <div 
         ref={carouselRef}
-        className="relative overflow-x-hidden h-[300px] flex items-center justify-center perspective-1000"
+        className="relative overflow-x-hidden h-[400px] flex items-center justify-center perspective-1000"
         style={{
           perspective: '1000px',
           perspectiveOrigin: '50% 50%',
@@ -177,18 +174,12 @@ export default function Carousel({ items, autoPlay = false, autoPlayInterval = 5
                   pointerEvents: 'auto',
                 }}
                 onClick={() => {
-                  if (isActive) {
-                    // Extract image src from content if available
-                    const item = items[index];
-                    if (item.imageSrc) {
-                      setExpandedImage(item.imageSrc);
-                    }
-                  } else {
+                  if (!isActive) {
                     goToSlide(index);
                   }
                 }}
               >
-                <div className="w-[240px] h-[280px]">
+                <div className="w-[280px] h-[350px]">
                   {item.content}
                 </div>
               </div>
@@ -212,42 +203,6 @@ export default function Carousel({ items, autoPlay = false, autoPlayInterval = 5
               aria-label={`Go to slide ${index + 1}`}
             />
           ))}
-        </div>
-      )}
-
-      {/* Expanded Image Modal */}
-      {expandedImage && (
-        <div
-          className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
-          onClick={() => setExpandedImage(null)}
-        >
-          <button
-            className="absolute top-4 right-4 text-white hover:text-white/70 transition-colors z-10"
-            onClick={() => setExpandedImage(null)}
-            aria-label="Close"
-          >
-            <svg
-              className="w-8 h-8"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-          <div className="relative max-w-7xl max-h-full w-full h-full flex items-center justify-center">
-            <img
-              src={expandedImage}
-              alt="Expanded view"
-              className="max-w-full max-h-full object-contain"
-              onClick={(e) => e.stopPropagation()}
-            />
-          </div>
         </div>
       )}
     </div>

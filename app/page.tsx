@@ -2,6 +2,8 @@
 
 import TrainerOval from './components/TrainerOval';
 import Carousel from './components/Carousel';
+import Navbar from './components/Navbar';
+import FallingFlowers from './components/FallingFlowers';
 import Image from 'next/image';
 import { useState } from 'react';
 
@@ -11,6 +13,8 @@ export default function Home() {
 
   return (
     <div className="min-h-screen overflow-x-hidden">
+      <Navbar />
+      <FallingFlowers isActive={expandedCard !== null} />
       <section 
         id="hero-section" 
         className={`relative h-screen overflow-hidden flex items-center justify-center bg-center bg-no-repeat overflow-x-hidden ${expandedCard ? '' : 'px-4 sm:px-6 lg:px-8'}`}
@@ -30,10 +34,10 @@ export default function Home() {
         <div className={`w-full ${expandedCard ? '' : 'max-w-6xl'} mx-auto py-24 sm:py-32 relative z-10`}>
           {/* Hero Content */}
           <div className={`text-center mb-16 sm:mb-20 transition-all duration-700 ease-out ${expandedCard ? 'hidden' : 'opacity-100 scale-100'}`}>
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-normal tracking-tight text-black mb-6 transition-all duration-700 ease-out">
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-normal tracking-tight text-white mb-6 transition-all duration-700 ease-out">
               Dorsa Wellness
           </h1>
-            <p className="text-lg sm:text-xl text-black/70 max-w-2xl mx-auto font-light tracking-wide transition-all duration-700 ease-out">
+            <p className="text-lg sm:text-xl text-white/90 max-w-2xl mx-auto font-light tracking-wide transition-all duration-700 ease-out">
               Premium personal training tailored to your goals
             </p>
           </div>
@@ -225,16 +229,68 @@ export default function Home() {
             </div>
           </div>
         </div>
+        
+        {/* Animated Scroll Arrow */}
+        {!expandedCard && (
+          <div className="absolute bottom-8 left-1/2 z-20" style={{ transform: 'translateX(-50%)' }}>
+            <button
+              onClick={() => {
+                const nextSection = document.querySelector('section:not(#hero-section)');
+                nextSection?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="flex flex-col items-center text-white hover:text-white/80 transition-colors duration-300 animate-bounce-arrow"
+              aria-label="Scroll to next section"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 14l-7 7m0 0l-7-7m7 7V3"
+                />
+              </svg>
+            </button>
+          </div>
+        )}
+        
+        {/* Creative Wave Transition */}
+        <div className="absolute bottom-0 left-0 right-0 z-20 pointer-events-none" style={{ marginBottom: '-2px', transform: 'translateY(1px)' }}>
+          <svg
+            viewBox="0 0 1440 200"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-full"
+            preserveAspectRatio="none"
+            style={{ height: '120px', display: 'block', verticalAlign: 'bottom' }}
+          >
+            <path
+              d="M0,200 C200,120 400,140 600,100 C800,60 1000,80 1200,60 C1300,50 1400,40 1440,30 L1440,200 L0,200 Z"
+              fill="#d9d4c7"
+              stroke="none"
+            />
+            <path
+              d="M0,200 C150,150 350,130 550,110 C750,90 950,100 1150,85 C1250,78 1350,70 1440,50 L1440,200 L0,200 Z"
+              fill="#d9d4c7"
+              opacity="0.95"
+              stroke="none"
+            />
+          </svg>
+        </div>
       </section>
 
       {/* Before & After Carousel Section */}
       <section className="py-24 sm:py-32 bg-[#d9d4c7] overflow-x-hidden pb-12 sm:pb-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 overflow-x-hidden">
           <div className="text-center mb-12">
-            <h2 className="text-4xl sm:text-5xl font-light text-black mb-4 tracking-tight">
+            <h2 className="text-4xl sm:text-5xl font-semibold text-white mb-4 tracking-tight">
               Transformations
             </h2>
-            <p className="text-lg text-black/70 font-light">
+            <p className="text-lg text-white font-normal">
               Real results from real clients
             </p>
           </div>
@@ -243,7 +299,6 @@ export default function Home() {
               items={[
                 {
                   id: '1',
-                  imageSrc: '/images/transformation1.JPG',
                   content: (
                     <div className="bg-white rounded-lg overflow-hidden border border-black/20">
                       <div className="aspect-[4/3] relative">
@@ -260,7 +315,6 @@ export default function Home() {
                 },
                 {
                   id: '2',
-                  imageSrc: '/images/Transformation2.JPG',
                   content: (
                     <div className="bg-white rounded-lg overflow-hidden border border-black/20">
                       <div className="aspect-[4/3] relative">
@@ -277,7 +331,6 @@ export default function Home() {
                 },
                 {
                   id: '3',
-                  imageSrc: '/images/Transformation3.JPG',
                   content: (
                     <div className="bg-white rounded-lg overflow-hidden border border-black/20">
                       <div className="aspect-[4/3] relative">
@@ -304,10 +357,10 @@ export default function Home() {
       <section className="pt-12 sm:pt-16 pb-24 sm:pb-32 bg-#d9d4c7 overflow-x-hidden">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 overflow-x-hidden">
           <div className="text-center mb-12">
-            <h2 className="text-4xl sm:text-5xl font-light text-black mb-4 tracking-tight">
+            <h2 className="text-4xl sm:text-5xl font-semibold text-white mb-4 tracking-tight">
               Client Reviews
             </h2>
-            <p className="text-lg text-black/70 font-light">
+            <p className="text-lg text-white font-normal">
               What our clients say
             </p>
           </div>
@@ -316,7 +369,6 @@ export default function Home() {
               items={[
                 {
                   id: '1',
-                  imageSrc: '/images/review1.jpeg',
                   content: (
                     <div className="bg-white rounded-lg overflow-hidden border border-black/20">
                       <div className="aspect-[4/3] relative">
@@ -333,7 +385,6 @@ export default function Home() {
                 },
                 {
                   id: '2',
-                  imageSrc: '/images/review2.jpeg',
                   content: (
                     <div className="bg-white rounded-lg overflow-hidden border border-black/20">
                       <div className="aspect-[4/3] relative">
