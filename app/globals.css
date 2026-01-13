@@ -41,11 +41,6 @@ body {
 }
 
 #hero-section {
-  background-size: contain;
-}
-
-@media (min-width: 640px) {
-  #hero-section {
-    background-size: cover;
-  }
+  background-size: cover;
+  background-position: center center;
 }
