@@ -11,9 +11,10 @@ interface CarouselProps {
   items: CarouselItem[];
   autoPlay?: boolean;
   autoPlayInterval?: number;
+  onItemClick?: (index: number) => void;
 }
 
-export default function Carousel({ items, autoPlay = false, autoPlayInterval = 5000 }: CarouselProps) {
+export default function Carousel({ items, autoPlay = false, autoPlayInterval = 5000, onItemClick }: CarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
@@ -97,7 +98,17 @@ export default function Carousel({ items, autoPlay = false, autoPlayInterval = 5
   if (items.length === 0) return null;
 
   const getTransform = (index: number) => {
-    const offset = index - currentIndex;
+    // Calculate offset with wrapping for infinite loop feel
+    let offset = index - currentIndex;
+    const totalItems = items.length;
+    
+    // Wrap offset to shortest distance (handles infinite loop)
+    if (offset > totalItems / 2) {
+      offset = offset - totalItems;
+    } else if (offset < -totalItems / 2) {
+      offset = offset + totalItems;
+    }
+    
     const absOffset = Math.abs(offset);
     
     if (absOffset === 0) {
@@ -118,16 +129,28 @@ export default function Carousel({ items, autoPlay = false, autoPlayInterval = 5
         opacity,
         zIndex: 5 - absOffset,
       };
-    } else {
-      // Far items
+    } else if (absOffset === 2) {
+      // Second adjacent items
       const translateX = offset * 120;
-      const scale = 0.7;
+      const scale = 0.75;
       const rotateY = offset * 30;
-      const opacity = 0.4;
+      const opacity = 0.5;
       return {
         transform: `translateX(${translateX}px) scale(${scale}) rotateY(${rotateY}deg)`,
         opacity,
         zIndex: 5 - absOffset,
+      };
+    } else {
+      // Far items - hide them
+      const translateX = offset * 120;
+      const scale = 0.6;
+      const rotateY = offset * 35;
+      const opacity = 0;
+      return {
+        transform: `translateX(${translateX}px) scale(${scale}) rotateY(${rotateY}deg)`,
+        opacity,
+        zIndex: 0,
+        pointerEvents: 'none' as const,
       };
     }
   };
@@ -137,7 +160,7 @@ export default function Carousel({ items, autoPlay = false, autoPlayInterval = 5
       {/* Carousel Container with 3D perspective */}
       <div 
         ref={carouselRef}
-        className="relative overflow-x-hidden h-[400px] flex items-center justify-center perspective-1000"
+        className="relative overflow-hidden h-[200px] flex items-center justify-center perspective-1000 pb-0 mb-0"
         style={{
           perspective: '1000px',
           perspectiveOrigin: '50% 50%',
@@ -174,12 +197,14 @@ export default function Carousel({ items, autoPlay = false, autoPlayInterval = 5
                   pointerEvents: 'auto',
                 }}
                 onClick={() => {
-                  if (!isActive) {
+                  if (isActive && onItemClick) {
+                    onItemClick(index);
+                  } else if (!isActive) {
                     goToSlide(index);
                   }
                 }}
               >
-                <div className="w-[280px] h-[350px]">
+                <div className="w-[180px] h-[180px]">
                   {item.content}
                 </div>
               </div>
@@ -190,7 +215,7 @@ export default function Carousel({ items, autoPlay = false, autoPlayInterval = 5
 
       {/* Dots Indicator */}
       {items.length > 1 && (
-        <div className="flex justify-center gap-2 mt-8">
+        <div className="flex justify-center gap-2">
           {items.map((_, index) => (
             <button
               key={index}

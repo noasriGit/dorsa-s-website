@@ -21,25 +21,58 @@ export default function FallingFlowers({ isActive }: FallingFlowersProps) {
 
   useEffect(() => {
     if (isActive) {
-      // Generate 3-4 flowers with random properties
-      const flowerCount = 4 + Math.floor(Math.random() * 2); // 3 or 4 flowers
-      const newFlowers: Flower[] = Array.from({ length: flowerCount }, (_, i) => {
-        const rotationStart = Math.random() * 45 - 22.5; // Start between -22.5 and 22.5 degrees
-        // Spawn only on the sides: left side (0-5%) or right side (95-100%)
-        const isLeftSide = Math.random() < 0.5;
-        const left = isLeftSide ? Math.random() * 3 : 95 + Math.random() * 3;
-        // Limit total rotation to 90 degrees (so flowers don't look like lines)
-        const rotationAmount = 30 + Math.random() * 60; // Between 30-90 degrees total
-        return {
+      const flowersPerSide = 4;
+      const totalFlowers = flowersPerSide * 2; // 4 on left, 4 on right
+      const newFlowers: Flower[] = [];
+      
+      // Spawn 4 flowers on the left side (0-4% width)
+      const leftPositions: number[] = [];
+      for (let i = 0; i < flowersPerSide; i++) {
+        let position: number;
+        let attempts = 0;
+        do {
+          position = Math.random() * 4; // 0-4% width
+          attempts++;
+        } while (
+          attempts < 20 && 
+          leftPositions.some(pos => Math.abs(pos - position) < 0.8) // Prevent stacking (0.8% minimum gap)
+        );
+        leftPositions.push(position);
+        newFlowers.push({
           id: i,
-          left: left,
-          delay: 0, // No delay - start immediately
-          duration: 4 + Math.random() * 3,
-          size: 30 + Math.random() * 20, // Size in pixels
-          rotationStart: rotationStart,
-          rotationEnd: rotationStart + rotationAmount,
-        };
-      });
+          left: position,
+          delay: 0,
+          duration: 4 + Math.random() * 2, // 4-6 seconds
+          size: 35 + Math.random() * 15, // 35-50px
+          rotationStart: 0, // No rotation
+          rotationEnd: 0, // No rotation
+        });
+      }
+      
+      // Spawn 4 flowers on the right side (96-100% width)
+      const rightPositions: number[] = [];
+      for (let i = 0; i < flowersPerSide; i++) {
+        let position: number;
+        let attempts = 0;
+        do {
+          position = 96 + Math.random() * 4; // 96-100% width
+          attempts++;
+        } while (
+          attempts < 20 && 
+          rightPositions.some(pos => Math.abs(pos - position) < 0.8) // Prevent stacking
+        );
+        rightPositions.push(position);
+        newFlowers.push({
+          id: flowersPerSide + i,
+          left: position,
+          delay: 0,
+          duration: 4 + Math.random() * 2, // 4-6 seconds
+          size: 35 + Math.random() * 15, // 35-50px
+          rotationStart: 0, // No rotation
+          rotationEnd: 0, // No rotation
+        });
+      }
+      
       setFlowers(newFlowers);
     } else {
       setFlowers([]);
@@ -50,14 +83,14 @@ export default function FallingFlowers({ isActive }: FallingFlowersProps) {
     return flowers.map((flower) => {
       return `@keyframes flower-fall-${flower.id} {
         0% {
-          transform: translateY(-50px) rotate(${flower.rotationStart}deg);
+          transform: translateY(-50px) rotate(0deg);
           opacity: 0.8;
         }
         95% {
           opacity: 0.8;
         }
         100% {
-          transform: translateY(calc(100vh + 100px)) rotate(${flower.rotationEnd}deg);
+          transform: translateY(calc(100vh + 100px)) rotate(0deg);
           opacity: 0;
         }
       }`;
