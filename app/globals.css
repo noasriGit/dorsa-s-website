@@ -8,7 +8,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: 'Winky Sans', system-ui, -apple-system, sans-serif;
+  --font-sans: 'Montserrat', system-ui, -apple-system, sans-serif;
   --font-mono: var(--font-geist-mono);
 }
 
@@ -21,6 +21,40 @@ html {
   max-width: 100vw;
   margin: 0;
   padding: 0;
+  font-size: 16px;
+  height: 100%;
+  overscroll-behavior-y: auto;
+  overflow-y: auto;
+}
+
+@media (min-width: 640px) {
+  html {
+    font-size: 16.5px;
+  }
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 17.5px;
+  }
+}
+
+@media (min-width: 1024px) {
+  html {
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 1280px) {
+  html {
+    font-size: 18.5px;
+  }
+}
+
+@media (min-width: 1536px) {
+  html {
+    font-size: 19px;
+  }
 }
 
 body {
@@ -42,7 +76,7 @@ body {
     );
   background-size: 4px 4px;
   color: var(--foreground);
-  font-family: 'Winky Sans', system-ui, -apple-system, sans-serif;
+  font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -50,6 +84,41 @@ body {
   margin: 0;
   padding: 0;
   position: relative;
+  min-height: 100%;
+  overscroll-behavior-y: auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.hero-image {
+  background-image: url('/images/heroimage.JPG');
+  background-color: #d9d4c7;
+  background-repeat: no-repeat;
+  background-position: center 18%;
+  background-size: 175%;
+}
+
+@media (min-width: 640px) {
+  .hero-image {
+    background-position: center 22%;
+    background-size: 165%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-image {
+    background-image: url('/images/desktopHero.jpg');
+    background-position: center 24%;
+    background-size: cover;
+  }
+}
+
+@media (min-width: 1280px) {
+  .hero-image {
+    background-image: url('/images/desktopHero.jpg');
+    background-position: center 0%;
+    background-size: cover;
+  }
 }
 
 .paper-bg {
@@ -126,6 +195,48 @@ body {
   opacity: 0.5;
 }
 
+.reviews-no-scroll {
+  overflow: hidden;
+}
+
+.expanded-card .expanded-card-title,
+.expanded-card .expanded-card-body,
+.expanded-card .expanded-card-cta {
+  font-size: inherit;
+}
+
+@media (max-width: 639px) {
+  .expanded-card .expanded-card-title {
+    font-size: 1.75rem !important;
+    line-height: 1.15;
+  }
+
+  .expanded-card .expanded-card-body {
+    font-size: 0.95rem !important;
+    line-height: 1.55;
+  }
+
+  .expanded-card .expanded-card-cta {
+    font-size: 0.95rem !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .expanded-card .expanded-card-title {
+    font-size: 3rem !important;
+    line-height: 1.1;
+  }
+
+  .expanded-card .expanded-card-body {
+    font-size: 1.25rem !important;
+    line-height: 1.7;
+  }
+
+  .expanded-card .expanded-card-cta {
+    font-size: 1.25rem !important;
+  }
+}
+
 @keyframes bounce-arrow {
   0%, 100% {
     transform: translateY(0);
@@ -137,4 +248,36 @@ body {
 
 .animate-bounce-arrow {
   animation: bounce-arrow 2s ease-in-out infinite;
+}
+
+.underline-animate {
+  position: relative;
+  display: inline-block;
+  --underline-progress: 0;
+}
+
+.underline-animate::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -10px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.6);
+  transform: scaleX(var(--underline-progress));
+  transform-origin: left center;
+  transition: transform 0.1s linear;
+}
+
+.underline-animate--visible::after {
+  transform: scaleX(1);
+}
+
+@keyframes dumbbellSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(1800deg);
+  }
 }

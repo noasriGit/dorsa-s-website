@@ -12,12 +12,20 @@ interface CarouselProps {
   autoPlay?: boolean;
   autoPlayInterval?: number;
   onItemClick?: (index: number) => void;
+  dotsClassName?: string;
 }
 
-export default function Carousel({ items, autoPlay = false, autoPlayInterval = 5000, onItemClick }: CarouselProps) {
+export default function Carousel({
+  items,
+  autoPlay = false,
+  autoPlayInterval = 5000,
+  onItemClick,
+  dotsClassName = 'mt-6',
+}: CarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
+  const [spacing, setSpacing] = useState(120);
   const carouselRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -29,6 +37,30 @@ export default function Carousel({ items, autoPlay = false, autoPlayInterval = 5
 
     return () => clearInterval(interval);
   }, [autoPlay, autoPlayInterval, items.length]);
+
+  useEffect(() => {
+    const updateSpacing = () => {
+      const width = window.innerWidth || 0;
+      if (width >= 1536) {
+        setSpacing(170);
+      } else if (width >= 1280) {
+        setSpacing(160);
+      } else if (width >= 1024) {
+        setSpacing(140);
+      } else if (width >= 640) {
+        setSpacing(120);
+      } else {
+        setSpacing(105);
+      }
+    };
+
+    updateSpacing();
+    window.addEventListener('resize', updateSpacing);
+
+    return () => {
+      window.removeEventListener('resize', updateSpacing);
+    };
+  }, []);
 
   const goToPrevious = () => {
     setCurrentIndex((prev) => (prev - 1 + items.length) % items.length);
@@ -120,7 +152,7 @@ export default function Carousel({ items, autoPlay = false, autoPlayInterval = 5
       };
     } else if (absOffset === 1) {
       // Adjacent items
-      const translateX = offset * 120; // Spacing
+      const translateX = offset * spacing; // Spacing
       const scale = 0.85;
       const rotateY = offset * 25; // Angle
       const opacity = 0.7;
@@ -131,7 +163,7 @@ export default function Carousel({ items, autoPlay = false, autoPlayInterval = 5
       };
     } else if (absOffset === 2) {
       // Second adjacent items
-      const translateX = offset * 120;
+      const translateX = offset * spacing;
       const scale = 0.75;
       const rotateY = offset * 30;
       const opacity = 0.5;
@@ -142,7 +174,7 @@ export default function Carousel({ items, autoPlay = false, autoPlayInterval = 5
       };
     } else {
       // Far items - hide them
-      const translateX = offset * 120;
+      const translateX = offset * spacing;
       const scale = 0.6;
       const rotateY = offset * 35;
       const opacity = 0;
@@ -156,11 +188,11 @@ export default function Carousel({ items, autoPlay = false, autoPlayInterval = 5
   };
 
   return (
-    <div className="relative w-full overflow-x-hidden">
+    <div className="relative w-full reviews-no-scroll">
       {/* Carousel Container with 3D perspective */}
       <div 
         ref={carouselRef}
-        className="relative overflow-hidden h-[200px] flex items-center justify-center perspective-1000 pb-0 mb-0"
+        className="relative reviews-no-scroll h-[220px] sm:h-[260px] lg:h-[320px] xl:h-[360px] flex items-center justify-center perspective-1000 pb-0 mb-0"
         style={{
           perspective: '1000px',
           perspectiveOrigin: '50% 50%',
@@ -204,7 +236,7 @@ export default function Carousel({ items, autoPlay = false, autoPlayInterval = 5
                   }
                 }}
               >
-                <div className="w-[180px] h-[180px]">
+                <div className="w-[200px] h-[200px] sm:w-[240px] sm:h-[240px] lg:w-[280px] lg:h-[280px] xl:w-[300px] xl:h-[300px]">
                   {item.content}
                 </div>
               </div>
@@ -215,7 +247,7 @@ export default function Carousel({ items, autoPlay = false, autoPlayInterval = 5
 
       {/* Dots Indicator */}
       {items.length > 1 && (
-        <div className="flex justify-center gap-2">
+        <div className={`flex justify-center gap-2 transform ${dotsClassName}`}>
           {items.map((_, index) => (
             <button
               key={index}
