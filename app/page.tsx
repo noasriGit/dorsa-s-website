@@ -55,6 +55,7 @@ export default function Home() {
   const [inspireProgress, setInspireProgress] = useState(0);
   const [showTransformCarousel, setShowTransformCarousel] = useState(false);
   const [showReviewsCarousel, setShowReviewsCarousel] = useState(false);
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
   const transformationTitleRef = useRef<HTMLHeadingElement>(null);
   const reviewsTitleRef = useRef<HTMLHeadingElement>(null);
   const transformCarouselRef = useRef<HTMLDivElement>(null);
@@ -186,6 +187,35 @@ export default function Home() {
     return `${text.slice(0, maxChars).trimEnd()}...`;
   };
 
+  const faqItems: { question: string; paragraphs: string[] }[] = [
+    {
+      question: 'What is the difference b/w in-person training and online coaching?',
+      paragraphs: [
+        'In-person training is for those who want hands-on assistance in their training. Your workouts are fully customized to your goals. It\'s great for those who need accountability getting to the gym & sticking to their program. This is training in-person only, workouts outside of training days as well as nutrition counseling is excluded.',
+        'Online coaching includes a fully customized program with workouts, nutrition, habit tracking, and weekly check-ins. This is a more hands-off approach where you\'ll receive your full program but you will need to make sure you show up for yourself daily. This is great for those with experience in the gym but need help in all areas of their fitness goals.',
+      ],
+    },
+    {
+      question: 'How long does it take to see results?',
+      paragraphs: [
+        'Most clients will see noticeable change within the first 6-8 weeks of consistency but lasting transformations take time to achieve. Results will vary depending on how consistent nutrition, training, sleep, etc. is.',
+      ],
+    },
+    {
+      question: 'What is your pricing like?',
+      paragraphs: [
+        'In-person training is billed based on how many sessions you\'d like to train for the month.',
+        'Online coaching is billed monthly with a minimum 3-month commitment. After 3 months, it\'s month-to-month.',
+      ],
+    },
+    {
+      question: 'What if I need to travel or have a busy week?',
+      paragraphs: [
+        'Your plan is designed to fit into your lifestyle and schedule. We\'ll work together to adjust training and/or nutrition if something comes up or if you have to travel.',
+      ],
+    },
+  ];
+
   const clamp = (value: number, min: number, max: number) =>
     Math.min(Math.max(value, min), max);
   const mapRange = (value: number, inMin: number, inMax: number, outMin: number, outMax: number) => {
@@ -210,7 +240,7 @@ export default function Home() {
         />
         <div className={`w-full ${expandedCard ? 'h-full flex items-center justify-center' : 'max-w-6xl'} mx-auto ${expandedCard ? '' : 'py-24 sm:py-32'} relative z-10 ${expandedCard ? '' : 'translate-y-[11vh]'}`}>
           {/* Hero Content */}
-          <div className={`text-center mb-16 sm:mb-20 transition-all duration-700 ease-out ${expandedCard ? 'hidden' : 'opacity-100 scale-100'}`}>
+          <div className={`text-center mb-8 sm:mb-10 transition-all duration-700 ease-out ${expandedCard ? 'hidden' : 'opacity-100 scale-100'}`}>
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-normal tracking-tight text-white mb-6 transition-all duration-700 ease-out">
               Dorsa Wellness
           </h1>
@@ -311,7 +341,7 @@ export default function Home() {
                           expandedCard === 'in-person' ? 'md:text-xl md:leading-relaxed lg:text-base xl:text-lg 2xl:text-xl lg:leading-relaxed' : ''
                         }`}
                       >
-                      One-on-one training sessions located in McLean, VA. These private sessions focus entirely on you, with personalized workout programs built around your specific goals, fitness level, and schedule. Please note, this option does NOT include nutrition counseling. Training sessions are strictly dedicated to one-on-one, in-person workouts designed to maximize results. Ideal for clients who want hands-on coaching
+                      One-on-one training sessions located in Tyson's Corner, VA, at $140 per hour. These private sessions focus entirely on you, with personalized workout programs built around your specific goals, fitness level, and schedule. Please note, this option does NOT include nutrition counseling. Training sessions are strictly dedicated to one-on-one, in-person workouts designed to maximize results. Ideal for clients who want hands-on coaching
                       </p>
                       <div className="flex justify-center mt-2 sm:mt-10 mb-2" key={`dumbbell-in-person-${expandedCard}`}>
                         <DumbbellSpinner />
@@ -600,8 +630,8 @@ export default function Home() {
                     <div className="bg-white rounded-lg overflow-hidden border border-black/20">
                       <div className="aspect-[4/3] relative">
                         <Image
-                          src="/images/Transformation2.JPG"
-                          alt="Transformation 2"
+                          src="/images/Transformation3.JPG"
+                          alt="Transformation 3"
                           fill
                           className="object-cover"
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1024px"
@@ -615,9 +645,41 @@ export default function Home() {
                   content: (
                     <div className="bg-white rounded-lg overflow-hidden border border-black/20">
                       <div className="aspect-[4/3] relative">
-            <Image
-                          src="/images/Transformation3.JPG"
-                          alt="Transformation 3"
+                        <Image
+                          src="/images/IMG_4397.JPG"
+                          alt="Client transformation — gallery image 1"
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1024px"
+                        />
+                      </div>
+                    </div>
+                  ),
+                },
+                {
+                  id: '4',
+                  content: (
+                    <div className="bg-white rounded-lg overflow-hidden border border-black/20">
+                      <div className="aspect-[4/3] relative">
+                        <Image
+                          src="/images/IMG_4712.JPG"
+                          alt="Client transformation result — gallery image 2"
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1024px"
+                        />
+                      </div>
+                    </div>
+                  ),
+                },
+                {
+                  id: '5',
+                  content: (
+                    <div className="bg-white rounded-lg overflow-hidden border border-black/20">
+                      <div className="aspect-[4/3] relative">
+                        <Image
+                          src="/images/IMG_4713.JPG"
+                          alt="Client transformation result — gallery image 3"
                           fill
                           className="object-cover"
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1024px"
@@ -631,7 +693,13 @@ export default function Home() {
               autoPlayInterval={5000}
               dotsClassName="mt-0 -translate-y-9"
               onItemClick={(index) => {
-                const images = ['/images/transformation1.JPG', '/images/Transformation2.JPG', '/images/Transformation3.JPG'];
+                const images = [
+                  '/images/transformation1.JPG',
+                  '/images/Transformation3.JPG',
+                  '/images/IMG_4397.JPG',
+                  '/images/IMG_4712.JPG',
+                  '/images/IMG_4713.JPG',
+                ];
                 setExpandedImage(images[index]);
               }}
             />
@@ -849,6 +917,69 @@ export default function Home() {
                 setExpandedReview(reviews[index]);
               }}
             />
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section id="faq" className="pt-8 sm:pt-12 pb-24 sm:pb-32 bg-[#d9d4c7] paper-bg">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10 sm:mb-12">
+            <h2 className="text-5xl sm:text-6xl md:text-7xl font-light text-white tracking-tight">
+              FAQ
+            </h2>
+          </div>
+          <div className="space-y-3 sm:space-y-4">
+            {faqItems.map((item, index) => {
+              const isOpen = openFaqIndex === index;
+              return (
+                <div
+                  key={item.question}
+                  className="paper-card rounded-lg border border-black/10 bg-[#fefefe] overflow-hidden"
+                >
+                  <button
+                    type="button"
+                    onClick={() => setOpenFaqIndex(isOpen ? null : index)}
+                    className="w-full flex items-start justify-between gap-4 text-left px-5 sm:px-6 py-4 sm:py-5 hover:bg-black/[0.02] transition-colors"
+                    aria-expanded={isOpen}
+                  >
+                    <span className="text-sm sm:text-base md:text-lg font-light text-black/90 leading-snug pr-2">
+                      {item.question}
+                    </span>
+                    <span
+                      className={`shrink-0 mt-0.5 text-[#d2b48c] transition-transform duration-300 ${
+                        isOpen ? 'rotate-180' : 'rotate-0'
+                      }`}
+                      aria-hidden
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </span>
+                  </button>
+                  <div
+                    className={`grid transition-[grid-template-rows] duration-300 ease-out ${
+                      isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+                    }`}
+                  >
+                    <div className="min-h-0 overflow-hidden">
+                      <div className="px-5 sm:px-6 pb-5 sm:pb-6 pt-0 border-t border-black/5">
+                        <div className="pt-4 space-y-3">
+                          {item.paragraphs.map((p, pi) => (
+                            <p
+                              key={pi}
+                              className="text-sm sm:text-base text-black/75 font-light leading-relaxed"
+                            >
+                              {p}
+                            </p>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
