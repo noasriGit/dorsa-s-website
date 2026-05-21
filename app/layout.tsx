@@ -18,6 +18,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Personal Training | Transform Your Body",
   description: "Premium personal training services - in person and online coaching tailored to your fitness goals",
+  appleWebApp: {
+    title: "MyWebSite",
+  },
 };
 
 export default function RootLayout({
