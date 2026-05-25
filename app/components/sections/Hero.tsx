@@ -6,7 +6,7 @@ export default function Hero() {
   return (
     <section
       id="hero-section"
-      className="relative min-h-[85svh] flex items-center bg-[var(--color-charcoal)] overflow-hidden"
+      className="relative min-h-svh flex items-center bg-[var(--color-charcoal)] overflow-hidden"
     >
       <div className="absolute inset-0">
         <Image
@@ -53,6 +53,27 @@ export default function Hero() {
             />
           </div>
         </div>
+      </div>
+
+      <div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-10 pb-[env(safe-area-inset-bottom,0px)]">
+        <a
+          href="#trust-intro"
+          className="scroll-hint flex flex-col items-center gap-2 text-white hover:text-white transition-colors"
+          aria-label="Scroll to continue"
+        >
+          <span className="text-xs sm:text-sm font-light tracking-wide opacity-50">
+            Scroll to Continue
+          </span>
+          <svg
+            className="w-7 h-7"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </a>
       </div>
     </section>
   );

@@ -10,7 +10,7 @@ import {
   type ReadyToChange,
   type ReadyToInvest,
 } from '@/lib/coaching-application/schema';
-import { scrollToApplyForm } from '@/lib/scroll';
+import { scrollToApplyForm, scrollToApplySuccess } from '@/lib/scroll';
 import Button from '../ui/Button';
 import FormProgress from './FormProgress';
 
@@ -112,7 +112,7 @@ export default function CoachingForm() {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState(false);
-  const skipStepScrollRef = useRef(true);
+  const scrollAfterStepChangeRef = useRef(false);
 
   useEffect(() => {
     const interest = getInterestFromUrl();
@@ -123,13 +123,15 @@ export default function CoachingForm() {
   }, []);
 
   useEffect(() => {
-    if (skipStepScrollRef.current) {
-      skipStepScrollRef.current = false;
-      return;
-    }
-
+    if (!scrollAfterStepChangeRef.current) return;
+    scrollAfterStepChangeRef.current = false;
     requestAnimationFrame(() => scrollToApplyForm());
   }, [step]);
+
+  useEffect(() => {
+    if (!submitted) return;
+    requestAnimationFrame(() => scrollToApplySuccess());
+  }, [submitted]);
 
   const update = useCallback(
     <K extends keyof CoachingApplicationInput>(key: K, value: CoachingApplicationInput[K]) => {
@@ -156,11 +158,13 @@ export default function CoachingForm() {
       return;
     }
     setErrors({});
+    scrollAfterStepChangeRef.current = true;
     setStep((s) => Math.min(s + 1, TOTAL_STEPS));
   };
 
   const goBack = () => {
     setErrors({});
+    scrollAfterStepChangeRef.current = true;
     setStep((s) => Math.max(s - 1, 1));
   };
 
@@ -196,13 +200,16 @@ export default function CoachingForm() {
 
   if (submitted) {
     return (
-      <div className="text-center py-8 fade-in">
-        <div className="w-14 h-14 rounded-full bg-[var(--color-taupe)]/30 flex items-center justify-center mx-auto mb-6">
+      <div
+        id="apply-success"
+        className="min-h-[min(60vh,22rem)] flex flex-col items-center justify-center text-center px-2 py-10 sm:py-12 fade-in"
+      >
+        <div className="w-14 h-14 rounded-full bg-[var(--color-taupe)]/30 flex items-center justify-center mb-6">
           <svg className="w-7 h-7 text-[var(--color-charcoal)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <p className="text-lg text-[var(--color-charcoal)] font-light leading-relaxed max-w-md mx-auto">
+        <p className="text-lg text-[var(--color-charcoal)] font-light leading-relaxed max-w-md">
           {application.successMessage}
         </p>
       </div>

@@ -32,3 +32,20 @@ export function scrollToApplyForm(behavior: ScrollBehavior = 'smooth') {
     behavior,
   });
 }
+
+export function scrollToApplySuccess(behavior: ScrollBehavior = 'smooth') {
+  const el = document.getElementById('apply-success');
+  if (!el) return;
+
+  const scrollMarginTop =
+    parseFloat(getComputedStyle(el).scrollMarginTop) || 0;
+  const rect = el.getBoundingClientRect();
+  const visibleHeight = window.innerHeight - scrollMarginTop;
+  const target =
+    window.scrollY + rect.top - scrollMarginTop - (visibleHeight - rect.height) / 2;
+
+  window.scrollTo({
+    top: Math.max(0, target),
+    behavior,
+  });
+}

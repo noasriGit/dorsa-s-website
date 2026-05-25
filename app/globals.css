@@ -212,4 +212,25 @@ body {
   .fade-in {
     animation: none;
   }
+
+  .scroll-hint {
+    animation: none;
+  }
+}
+
+.scroll-hint {
+  animation: scrollHintBounce 2s ease-in-out infinite;
+}
+
+@keyframes scrollHintBounce {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: translateY(8px);
+    opacity: 1;
+  }
 }

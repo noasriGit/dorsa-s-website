@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import Navbar from './components/layout/Navbar';
+import ScrollManager from './components/ScrollManager';
 import { Analytics } from '@vercel/analytics/next';
 import { site } from '@/lib/content';
 
@@ -61,10 +62,16 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
           rel="stylesheet"
         />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){if('scrollRestoration' in history)history.scrollRestoration='manual';var n=performance.getEntriesByType('navigation')[0];if(n&&n.type==='reload'){window.scrollTo(0,0);if(location.hash)history.replaceState(null,'',location.pathname+location.search);}})();`,
+          }}
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden`}
       >
+        <ScrollManager />
         <Navbar />
         {children}
         <Analytics />

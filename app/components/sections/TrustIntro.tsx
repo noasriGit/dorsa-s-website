@@ -3,7 +3,7 @@ import SectionHeading from '../ui/SectionHeading';
 
 export default function TrustIntro() {
   return (
-    <section className="section-padding bg-[var(--color-cream)]">
+    <section id="trust-intro" className="section-padding bg-[var(--color-cream)]">
       <div className="section-container">
         <SectionHeading title={trustIntro.title} subtitle={trustIntro.body} />
       </div>
