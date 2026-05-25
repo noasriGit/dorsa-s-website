@@ -49,3 +49,30 @@ export function scrollToApplySuccess(behavior: ScrollBehavior = 'smooth') {
     behavior,
   });
 }
+
+function getHashFromHref(href: string): string {
+  const hashIndex = href.indexOf('#');
+  return hashIndex >= 0 ? href.slice(hashIndex) : '';
+}
+
+export function handleApplyLinkClick(event: MouseEvent): void {
+  const target = event.target;
+  if (!(target instanceof Element)) return;
+
+  const link = target.closest('a[href*="#apply"]');
+  if (!link) return;
+
+  const pathname = window.location.pathname;
+  if (pathname !== '/' && pathname !== '') return;
+
+  const href = link.getAttribute('href');
+  if (!href) return;
+
+  const targetHash = getHashFromHref(href);
+  if (!targetHash.startsWith('#apply')) return;
+
+  if (window.location.hash === targetHash) {
+    event.preventDefault();
+    requestAnimationFrame(() => scrollToApplyForm());
+  }
+}

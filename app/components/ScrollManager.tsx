@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { scrollToApplyForm } from '@/lib/scroll';
+import { handleApplyLinkClick, scrollToApplyForm } from '@/lib/scroll';
 
 function scrollToApplyFromHash() {
   if (window.location.hash.startsWith('#apply')) {
@@ -29,7 +29,11 @@ export default function ScrollManager() {
 
     scrollToApplyFromHash();
     window.addEventListener('hashchange', scrollToApplyFromHash);
-    return () => window.removeEventListener('hashchange', scrollToApplyFromHash);
+    document.addEventListener('click', handleApplyLinkClick);
+    return () => {
+      window.removeEventListener('hashchange', scrollToApplyFromHash);
+      document.removeEventListener('click', handleApplyLinkClick);
+    };
   }, []);
 
   return null;
