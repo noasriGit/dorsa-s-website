@@ -66,7 +66,7 @@ I meet you where you are while challenging you to push just 1% further each day.
     'ACE Certified Personal Trainer',
     'ACE Certified Prenatal & Postpartum',
   ],
-  image: '/images/ovalimage.JPG',
+  image: '/images/about-dorsa.png',
 } as const;
 
 export const reviews = {
