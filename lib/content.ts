@@ -51,8 +51,9 @@ export const transformations = {
     { src: '/images/transformation1.JPG', alt: 'Client transformation 1' },
     { src: '/images/Transformation3.JPG', alt: 'Client transformation 2' },
     { src: '/images/IMG_4397.JPG', alt: 'Client transformation 3' },
-    { src: '/images/IMG_4712.JPG', alt: 'Client transformation 4' },
+    { src: '/images/IMG_4712.png', alt: 'Client transformation 4' },
     { src: '/images/IMG_4713.JPG', alt: 'Client transformation 5' },
+    { src: '/images/Transformation4.png', alt: 'Client transformation 6', cover: true },
   ],
 } as const;
 

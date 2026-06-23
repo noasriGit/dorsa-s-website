@@ -37,14 +37,14 @@ export default function Transformations() {
               key={img.src}
               type="button"
               onClick={() => setLightboxSrc(img.src)}
-              className="relative aspect-[3/4] rounded-xl overflow-hidden border border-black/8 shadow-sm hover:shadow-md transition-shadow focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-taupe)]"
+              className="relative aspect-square rounded-xl overflow-hidden border border-black/8 bg-black/5 shadow-sm hover:shadow-md transition-shadow focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-taupe)]"
               aria-label={`View ${img.alt}`}
             >
               <Image
                 src={img.src}
                 alt={img.alt}
                 fill
-                className="object-cover"
+                className={'cover' in img && img.cover ? 'object-cover' : 'object-contain'}
                 sizes="(max-width: 768px) 50vw, 33vw"
               />
             </button>
@@ -71,7 +71,7 @@ export default function Transformations() {
             </svg>
           </button>
           <div
-            className="relative w-full max-w-3xl aspect-[3/4] max-h-[85vh]"
+            className="relative w-full max-w-3xl aspect-square max-h-[85vh]"
             onClick={(e) => e.stopPropagation()}
           >
             <Image
