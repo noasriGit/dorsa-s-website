@@ -67,7 +67,7 @@ export function validateApplication(
 
 export const COACHING_INTEREST_LABELS: Record<CoachingInterest, string> = {
   online: 'Online coaching',
-  'in-person': 'In-person training (McLean, VA)',
+  'in-person': "In-person training (Tyson's corner, VA / Virtual)",
 };
 
 export const READY_TO_CHANGE_LABELS: Record<ReadyToChange, string> = {

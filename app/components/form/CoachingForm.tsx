@@ -18,7 +18,7 @@ const TOTAL_STEPS = 3;
 
 const PROGRAM_OPTIONS: { value: CoachingInterest; label: string }[] = [
   { value: 'online', label: 'Online coaching' },
-  { value: 'in-person', label: 'In-person training (McLean, VA)' },
+  { value: 'in-person', label: "In-person training (Tyson's corner, VA / Virtual)" },
 ];
 
 const READY_TO_CHANGE_OPTIONS: { value: ReadyToChange; label: string }[] = [

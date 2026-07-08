@@ -44,15 +44,15 @@ export default function Services() {
               <h3 className="text-2xl font-light text-[var(--color-charcoal)] mb-2">
                 {services.online.title}
               </h3>
+              <p className="text-2xl sm:text-3xl font-medium text-[var(--color-charcoal)]">
+                {services.online.price}
+              </p>
             </div>
             <p className="text-[var(--color-muted)] font-light leading-relaxed flex-1 mb-4">
               {services.online.description}
             </p>
-            <p className="text-sm text-[var(--color-charcoal)] font-light mb-1">
-              {services.online.pricingNote}
-            </p>
             <p className="text-sm text-[var(--color-muted)] font-light mb-6">
-              {services.online.pricingSubnote}
+              {services.online.caption}
             </p>
             <Button href={services.online.applyHref} className="w-full sm:w-auto">
               {services.online.cta}

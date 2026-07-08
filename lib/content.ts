@@ -23,7 +23,7 @@ export const trustIntro = {
 export const services = {
   inPerson: {
     title: 'In-Person Coaching',
-    location: "Tyson's Corner, VA",
+    location: "Tyson's corner, VA / Virtual",
     price: '$140/hr',
     description:
       'Premium hands-on 1:1 training with form correction, accountability, structured workouts, and direct coaching support. Best for clients who want in-person structure and real-time guidance.',
@@ -35,9 +35,9 @@ export const services = {
     title: 'Online Coaching',
     description:
       'App-based workouts, nutrition guidance, habit tracking, check-ins, and ongoing support, built to fit your lifestyle and schedule.',
-    pricingNote: 'Pricing is customized based on your goals and level of support.',
-    pricingSubnote:
-      'Pricing depends on your goals, lifestyle, and level of support.',
+    caption:
+      'Online coaching is for women who are tired of yo-yo dieting, quick fixes, and are looking to commit to a healthy lifestyle that gets you long-lasting results.',
+    price: '$399/month',
     cta: 'Apply for Online Coaching',
     applyHref: '/#apply?interest=online',
   },
@@ -116,11 +116,11 @@ export const application = {
   errorMessage:
     'Something went wrong while submitting your application. Please try again, or email Dorsa directly at',
   inPersonAcknowledgement:
-    'In-person training is $140/hr and takes place in McLean, VA. Please continue only if this works for your budget and location.',
+    "In-person training is $140/hr and takes place in Tyson's corner, VA / Virtual. Please continue only if this works for your budget and location.",
   inPersonCheckbox:
-    'I understand that in-person training is $140/hr and takes place in McLean, VA.',
+    "I understand that in-person training is $140/hr and takes place in Tyson's corner, VA / Virtual.",
   onlineMessage:
-    'Online coaching is customized based on your goals, lifestyle, and level of support. Dorsa will review your application and follow up with next steps.',
+    'Online coaching is $399/month. Dorsa will review your application and follow up with next steps.',
 } as const;
 
 export const faq = {
@@ -142,8 +142,8 @@ export const faq = {
     {
       question: 'What is your pricing like?',
       paragraphs: [
-        "In-person training is $140/hr in Tyson's Corner, VA and is billed based on how many sessions you'd like to train for the month.",
-        'Online coaching is billed monthly with customized pricing based on your goals and level of support. Details are shared after your application is reviewed.',
+        "In-person training is $140/hr in Tyson's corner, VA / Virtual and is billed based on how many sessions you'd like to train for the month.",
+        'Online coaching is $399/month and includes a fully customized program with workouts, nutrition, habit tracking, and weekly check-ins.',
       ],
     },
     {

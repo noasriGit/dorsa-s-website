@@ -22,12 +22,12 @@ function buildEmailHtml(data: CoachingApplicationPayload): string {
     ? `
       <p><strong>Program:</strong> ${COACHING_INTEREST_LABELS['in-person']}</p>
       <p><strong>Acknowledged $140/hr pricing:</strong> ${data.inPersonPricingAcknowledged ? 'Yes' : 'No'}</p>
-      <p><strong>Location:</strong> McLean, VA</p>
+      <p><strong>Location:</strong> Tyson's corner, VA / Virtual</p>
     `
     : isOnline
       ? `
       <p><strong>Program:</strong> ${COACHING_INTEREST_LABELS.online}</p>
-      <p><strong>Pricing shown publicly:</strong> No</p>
+      <p><strong>Pricing shown publicly:</strong> Yes ($399/month)</p>
       <p><strong>Needs follow-up/call:</strong> Yes</p>
     `
       : '';
