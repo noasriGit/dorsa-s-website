@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 const description =
-  'Personalized 1:1 fitness coaching for in-person and online clients focused on strength, fat loss, body recomposition, habits, and long-term results.';
+  'In-person and virtual 1:1 training (2x/week minimum) and online coaching, focused on strength, fat loss, body recomposition, habits, and long-term results.';
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),

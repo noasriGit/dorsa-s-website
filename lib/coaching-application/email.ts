@@ -21,8 +21,9 @@ function buildEmailHtml(data: CoachingApplicationPayload): string {
   const interestExtras = isInPerson
     ? `
       <p><strong>Program:</strong> ${COACHING_INTEREST_LABELS['in-person']}</p>
-      <p><strong>Acknowledged $140/hr pricing:</strong> ${data.inPersonPricingAcknowledged ? 'Yes' : 'No'}</p>
-      <p><strong>Location:</strong> Tyson's corner, VA / Virtual</p>
+      <p><strong>Acknowledged $140/hr pricing and 2x/week minimum:</strong> ${data.inPersonPricingAcknowledged ? 'Yes' : 'No'}</p>
+      <p><strong>Location:</strong> Tyson's Corner, VA / Virtual</p>
+      <p><strong>Minimum:</strong> 2x/week</p>
     `
     : isOnline
       ? `

@@ -55,7 +55,7 @@ export function validateApplication(
 
   if (data.coachingInterest === 'in-person' && !data.inPersonPricingAcknowledged) {
     errors.inPersonPricingAcknowledged =
-      'Please confirm you understand the pricing and location';
+      'Please confirm you understand the pricing, 2x/week minimum, and location';
   }
 
   if (!data.readyToChange) errors.readyToChange = 'Please select an option';
@@ -67,7 +67,7 @@ export function validateApplication(
 
 export const COACHING_INTEREST_LABELS: Record<CoachingInterest, string> = {
   online: 'Online coaching',
-  'in-person': "In-person training (Tyson's corner, VA / Virtual)",
+  'in-person': "In-person & virtual 1:1 training (Tyson's Corner, VA) · 2x/week minimum",
 };
 
 export const READY_TO_CHANGE_LABELS: Record<ReadyToChange, string> = {

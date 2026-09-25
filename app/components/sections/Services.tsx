@@ -24,6 +24,9 @@ export default function Services() {
               <p className="text-2xl sm:text-3xl font-medium text-[var(--color-charcoal)]">
                 {services.inPerson.price}
               </p>
+              <p className="mt-2 text-sm font-medium tracking-wide uppercase text-[var(--color-taupe)]">
+                {services.inPerson.minimum}
+              </p>
             </div>
             <p className="text-[var(--color-muted)] font-light leading-relaxed flex-1 mb-4">
               {services.inPerson.description}

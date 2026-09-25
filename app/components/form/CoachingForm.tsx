@@ -18,7 +18,7 @@ const TOTAL_STEPS = 3;
 
 const PROGRAM_OPTIONS: { value: CoachingInterest; label: string }[] = [
   { value: 'online', label: 'Online coaching' },
-  { value: 'in-person', label: "In-person training (Tyson's corner, VA / Virtual)" },
+  { value: 'in-person', label: "In-person & virtual 1:1 training (Tyson's Corner, VA) · 2x/week minimum" },
 ];
 
 const READY_TO_CHANGE_OPTIONS: { value: ReadyToChange; label: string }[] = [
@@ -91,7 +91,7 @@ function validateStep(
       errors.dietaryRestrictions = 'Please list dietary restrictions (or write "None")';
     if (data.coachingInterest === 'in-person' && !data.inPersonPricingAcknowledged) {
       errors.inPersonPricingAcknowledged =
-        'Please confirm you understand the pricing and location';
+        'Please confirm you understand the pricing, 2x/week minimum, and location';
     }
   }
 
