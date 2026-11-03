@@ -24,7 +24,23 @@ export const services = {
   inPerson: {
     title: 'In-Person & Virtual Training',
     location: "Tyson's Corner, VA / Virtual",
-    price: '$140/hr',
+    pricing: [
+      {
+        label: "In-Person · Tyson's Corner",
+        tiers: [
+          { name: '1:1 training', price: '$140/hr' },
+          { name: 'Partner training', price: '$90/person' },
+          { name: 'Semi-private (3-4 people)', price: '$45/person' },
+        ],
+      },
+      {
+        label: 'Virtual 1:1',
+        tiers: [
+          { name: '30 minutes', price: '$65' },
+          { name: '45 minutes', price: '$100' },
+        ],
+      },
+    ],
     minimum: '2x/week minimum',
     description:
       'Premium 1:1 training, in person or virtual, with form correction, accountability, structured workouts, and direct coaching support. Sessions have a 2x/week minimum. Best for clients who want real-time guidance.',
@@ -117,9 +133,9 @@ export const application = {
   errorMessage:
     'Something went wrong while submitting your application. Please try again, or email Dorsa directly at',
   inPersonAcknowledgement:
-    "In-person and virtual 1:1 training is $140/hr in Tyson's Corner, VA or virtual, with a 2x/week minimum. Please continue only if this works for your budget, schedule, and location.",
+    "In-person training in Tyson's Corner, VA is $140/hr for 1:1, $90/person for partner training, or $45/person for semi-private training (3-4 people). Virtual 1:1 training is $65 for 30 minutes or $100 for 45 minutes. All training has a 2x/week minimum. Please continue only if this works for your budget, schedule, and location.",
   inPersonCheckbox:
-    "I understand that in-person and virtual 1:1 training is $140/hr, with a 2x/week minimum, in Tyson's Corner, VA or virtual.",
+    'I understand the in-person and virtual training pricing above and the 2x/week minimum.',
   onlineMessage:
     'Online coaching is $399/month. Dorsa will review your application and follow up with next steps.',
 } as const;
@@ -143,7 +159,7 @@ export const faq = {
     {
       question: 'What is your pricing like?',
       paragraphs: [
-        "In-person and virtual 1:1 training is $140/hr in Tyson's Corner, VA or virtual, with a 2x/week minimum. Sessions are billed based on how many you train each month.",
+        "In-person training in Tyson's Corner, VA is $140/hr for 1:1, $90/person for partner training, and $45/person for semi-private training (3-4 people). Virtual 1:1 training is $65 for 30 minutes or $100 for 45 minutes. All training has a 2x/week minimum, and sessions are billed based on how many you train each month.",
         'Online coaching is $399/month and includes a fully customized program with workouts, nutrition, habit tracking, and weekly check-ins.',
       ],
     },

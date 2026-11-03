@@ -21,10 +21,26 @@ export default function Services() {
               <h3 className="text-2xl font-light text-[var(--color-charcoal)] mb-2">
                 {services.inPerson.title}
               </h3>
-              <p className="text-2xl sm:text-3xl font-medium text-[var(--color-charcoal)]">
-                {services.inPerson.price}
-              </p>
-              <p className="mt-2 text-sm font-medium tracking-wide uppercase text-[var(--color-taupe)]">
+              <div className="mt-3 space-y-4">
+                {services.inPerson.pricing.map((group) => (
+                  <div key={group.label}>
+                    <p className="text-xs font-medium tracking-wider uppercase text-[var(--color-muted)] mb-1">
+                      {group.label}
+                    </p>
+                    <ul className="divide-y divide-black/8">
+                      {group.tiers.map((tier) => (
+                        <li key={tier.name} className="flex items-baseline justify-between gap-4 py-1.5">
+                          <span className="font-light text-[var(--color-charcoal)]">{tier.name}</span>
+                          <span className="text-lg font-medium text-[var(--color-charcoal)] whitespace-nowrap">
+                            {tier.price}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+              <p className="mt-3 text-sm font-medium tracking-wide uppercase text-[var(--color-taupe)]">
                 {services.inPerson.minimum}
               </p>
             </div>
