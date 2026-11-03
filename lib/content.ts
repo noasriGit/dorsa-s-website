@@ -49,11 +49,12 @@ export const transformations = {
   subtitle: 'Your Journey. Your Results.',
   body: 'The results you see here come from consistency, hard work, and personalized 1:1 coaching. No two journeys are the same, and each one is guided with intention, support, and a focus on long-term success.',
   images: [
-    { src: '/images/transformation1.JPG', alt: 'Client transformation 1' },
+    { src: '/images/Transformation5.jpg', alt: 'Client transformation 1' },
     { src: '/images/Transformation3.JPG', alt: 'Client transformation 2' },
     { src: '/images/IMG_4397.JPG', alt: 'Client transformation 3' },
     { src: '/images/IMG_4712.png', alt: 'Client transformation 4' },
     { src: '/images/IMG_4713.JPG', alt: 'Client transformation 5' },
+    { src: '/images/Transformation6.jpg', alt: 'Client transformation 6' },
   ],
 } as const;
 
