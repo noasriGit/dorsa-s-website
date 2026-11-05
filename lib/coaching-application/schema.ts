@@ -1,4 +1,4 @@
-export type CoachingInterest = 'online' | 'in-person';
+export type CoachingInterest = 'in-person' | 'virtual';
 
 export type ReadyToChange = 'yes' | 'no';
 
@@ -16,7 +16,7 @@ export type CoachingApplicationInput = {
   dietaryRestrictions: string;
   readyToChange: ReadyToChange;
   readyToInvest: ReadyToInvest;
-  inPersonPricingAcknowledged?: boolean;
+  pricingAcknowledged?: boolean;
   websiteUrl?: string;
 };
 
@@ -46,16 +46,16 @@ export function validateApplication(
   else if (!/^\d+$/.test(data.age.trim()) || Number(data.age) < 13 || Number(data.age) > 120)
     errors.age = 'Enter a valid age';
 
-  if (!data.coachingInterest) errors.coachingInterest = 'Please select a program';
+  if (!Object.hasOwn(COACHING_INTEREST_LABELS, data.coachingInterest ?? ''))
+    errors.coachingInterest = 'Please select a program';
   if (!data.fitnessGoal?.trim()) errors.fitnessGoal = 'Please describe your main fitness goal';
   if (!data.exerciseHistory?.trim())
     errors.exerciseHistory = 'Please share your exercise history and any injuries';
   if (!data.dietaryRestrictions?.trim())
     errors.dietaryRestrictions = 'Please list dietary restrictions (or write "None")';
 
-  if (data.coachingInterest === 'in-person' && !data.inPersonPricingAcknowledged) {
-    errors.inPersonPricingAcknowledged =
-      'Please confirm you understand the pricing, 2x/week minimum, and location';
+  if (data.coachingInterest && !data.pricingAcknowledged) {
+    errors.pricingAcknowledged = 'Please confirm you understand the pricing and 2x/week minimum';
   }
 
   if (!data.readyToChange) errors.readyToChange = 'Please select an option';
@@ -66,8 +66,8 @@ export function validateApplication(
 }
 
 export const COACHING_INTEREST_LABELS: Record<CoachingInterest, string> = {
-  online: 'Online coaching',
-  'in-person': "In-person & virtual 1:1 training (Tyson's Corner, VA) · 2x/week minimum",
+  'in-person': "In-person training (Tyson's Corner, VA) · 2x/week minimum",
+  virtual: 'Virtual 1:1 training · 2x/week minimum',
 };
 
 export const READY_TO_CHANGE_LABELS: Record<ReadyToChange, string> = {

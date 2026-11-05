@@ -10,55 +10,47 @@ export const site = {
 export const hero = {
   headline: 'Premium personal training tailored to your goals',
   subheadline:
-    'In-person and virtual 1:1 training in Tyson\'s Corner, VA (2x/week minimum), or fully online coaching, built around your goals, lifestyle, and long-term success.',
+    'In-person training in Tyson\'s Corner, VA and virtual 1:1 training (2x/week minimum), built around your goals, lifestyle, and long-term success.',
   primaryCta: 'Start Your Coaching Application',
   secondaryCta: 'View Transformations',
 } as const;
 
 export const trustIntro = {
   title: 'Coaching that meets you where you are',
-  body: 'Whether you train in person, virtually, or online, every program is built for you, not a template. In-person and virtual 1:1 training has a 2x/week minimum. Online coaching stays flexible for busy schedules, with support that keeps you consistent and confident.',
+  body: 'Whether you train in person or virtually, every program is built for you, not a template. Training has a 2x/week minimum, with support that keeps you consistent and confident.',
 } as const;
 
-export const services = {
-  inPerson: {
-    title: 'In-Person & Virtual Training',
-    location: "Tyson's Corner, VA / Virtual",
-    pricing: [
-      {
-        label: "In-Person · Tyson's Corner",
-        tiers: [
-          { name: '1:1 training', price: '$140/hr' },
-          { name: 'Partner training', price: '$90/person' },
-          { name: 'Semi-private (3-4 people)', price: '$45/person' },
-        ],
-      },
-      {
-        label: 'Virtual 1:1',
-        tiers: [
-          { name: '30 minutes', price: '$65' },
-          { name: '45 minutes', price: '$100' },
-        ],
-      },
+export const services = [
+  {
+    title: 'In-Person Training',
+    location: "Tyson's Corner, VA",
+    tiers: [
+      { name: '1:1 training', price: '$140/hr' },
+      { name: 'Partner training', price: '$90/person' },
+      { name: 'Semi-private (3-4 people)', price: '$45/person' },
     ],
     minimum: '2x/week minimum',
     description:
-      'Premium 1:1 training, in person or virtual, with form correction, accountability, structured workouts, and direct coaching support. Sessions have a 2x/week minimum. Best for clients who want real-time guidance.',
-    note: 'Nutrition counseling is not included with in-person or virtual sessions.',
-    cta: 'Apply for 1:1 Training',
+      'Premium in-person training with form correction, accountability, structured workouts, and direct coaching support. Train 1:1, with a partner, or in a semi-private group. Best for clients who want hands-on guidance.',
+    note: 'Nutrition counseling is not included with in-person sessions.',
+    cta: 'Apply for In-Person Training',
     applyHref: '/#apply?interest=in-person',
   },
-  online: {
-    title: 'Online Coaching',
+  {
+    title: 'Virtual Training',
+    location: 'Remote · Live 1:1',
+    tiers: [
+      { name: '30-minute session', price: '$65' },
+      { name: '45-minute session', price: '$100' },
+    ],
+    minimum: '2x/week minimum',
     description:
-      'App-based workouts, nutrition guidance, habit tracking, check-ins, and ongoing support, built to fit your lifestyle and schedule.',
-    caption:
-      'Online coaching is for women who are tired of yo-yo dieting, quick fixes, and are looking to commit to a healthy lifestyle that gets you long-lasting results.',
-    price: '$399/month',
-    cta: 'Apply for Online Coaching',
-    applyHref: '/#apply?interest=online',
+      'Premium 1:1 training wherever you are, with form correction, accountability, structured workouts, and direct coaching support. Best for clients who want real-time guidance from home or while traveling.',
+    note: 'Nutrition counseling is not included with virtual sessions.',
+    cta: 'Apply for Virtual Training',
+    applyHref: '/#apply?interest=virtual',
   },
-} as const;
+] as const;
 
 export const transformations = {
   title: 'Transformations',
@@ -132,22 +124,27 @@ export const application = {
     'Thank you for applying! Dorsa will review your answers and reach out soon with next steps.',
   errorMessage:
     'Something went wrong while submitting your application. Please try again, or email Dorsa directly at',
-  inPersonAcknowledgement:
-    "In-person training in Tyson's Corner, VA is $140/hr for 1:1, $90/person for partner training, or $45/person for semi-private training (3-4 people). Virtual 1:1 training is $65 for 30 minutes or $100 for 45 minutes. All training has a 2x/week minimum. Please continue only if this works for your budget, schedule, and location.",
-  inPersonCheckbox:
-    'I understand the in-person and virtual training pricing above and the 2x/week minimum.',
-  onlineMessage:
-    'Online coaching is $399/month. Dorsa will review your application and follow up with next steps.',
+  pricingAcknowledgement: {
+    'in-person':
+      "In-person training in Tyson's Corner, VA is $140/hr for 1:1, $90/person for partner training, or $45/person for semi-private training (3-4 people), with a 2x/week minimum. Please continue only if this works for your budget, schedule, and location.",
+    virtual:
+      'Virtual 1:1 training is $65 for a 30-minute session or $100 for a 45-minute session, with a 2x/week minimum. Please continue only if this works for your budget and schedule.',
+  },
+  pricingCheckbox: {
+    'in-person':
+      "I understand the in-person pricing above, the 2x/week minimum, and that sessions are in Tyson's Corner, VA.",
+    virtual: 'I understand the virtual pricing above and the 2x/week minimum.',
+  },
 } as const;
 
 export const faq = {
   title: 'FAQ',
   items: [
     {
-      question: 'What is the difference between in-person/virtual training and online coaching?',
+      question: 'What is the difference between in-person and virtual training?',
       paragraphs: [
-        "In-person and virtual training is 1:1 coaching for those who want hands-on assistance. Workouts are fully customized to your goals, with a 2x/week minimum. Sessions are in Tyson's Corner, VA or virtual. It's great for accountability and sticking to a program. Workouts outside of training days, and nutrition counseling, are not included.",
-        "Online coaching includes a fully customized program with workouts, nutrition, habit tracking, and weekly check-ins. This is a more hands-off approach where you'll receive your full program but you will need to make sure you show up for yourself daily. This is great for those with experience in the gym but need help in all areas of their fitness goals.",
+        "In-person training is in Tyson's Corner, VA, and you can train 1:1, with a partner, or in a semi-private group of 3-4 people. Virtual training is 1:1 and happens live from wherever you are, in 30 or 45-minute sessions.",
+        "Both are fully customized to your goals, with a 2x/week minimum. They're great for accountability and sticking to a program. Workouts outside of training days, and nutrition counseling, are not included.",
       ],
     },
     {
@@ -160,7 +157,6 @@ export const faq = {
       question: 'What is your pricing like?',
       paragraphs: [
         "In-person training in Tyson's Corner, VA is $140/hr for 1:1, $90/person for partner training, and $45/person for semi-private training (3-4 people). Virtual 1:1 training is $65 for 30 minutes or $100 for 45 minutes. All training has a 2x/week minimum, and sessions are billed based on how many you train each month.",
-        'Online coaching is $399/month and includes a fully customized program with workouts, nutrition, habit tracking, and weekly check-ins.',
       ],
     },
     {

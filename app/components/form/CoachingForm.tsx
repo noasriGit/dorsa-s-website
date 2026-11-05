@@ -17,8 +17,8 @@ import FormProgress from './FormProgress';
 const TOTAL_STEPS = 3;
 
 const PROGRAM_OPTIONS: { value: CoachingInterest; label: string }[] = [
-  { value: 'online', label: 'Online coaching' },
-  { value: 'in-person', label: "In-person & virtual 1:1 training (Tyson's Corner, VA) · 2x/week minimum" },
+  { value: 'in-person', label: "In-person training (Tyson's Corner, VA) · 2x/week minimum" },
+  { value: 'virtual', label: 'Virtual 1:1 training · 2x/week minimum' },
 ];
 
 const READY_TO_CHANGE_OPTIONS: { value: ReadyToChange; label: string }[] = [
@@ -43,7 +43,7 @@ const emptyForm: CoachingApplicationInput = {
   dietaryRestrictions: '',
   readyToChange: '' as ReadyToChange,
   readyToInvest: '' as ReadyToInvest,
-  inPersonPricingAcknowledged: false,
+  pricingAcknowledged: false,
   websiteUrl: '',
 };
 
@@ -59,7 +59,7 @@ function getInterestFromUrl(): CoachingInterest | null {
     }
   }
 
-  if (interest === 'in-person' || interest === 'online') return interest;
+  if (interest === 'in-person' || interest === 'virtual') return interest;
   return null;
 }
 
@@ -89,9 +89,8 @@ function validateStep(
       errors.exerciseHistory = 'Please share your exercise history and any injuries';
     if (!data.dietaryRestrictions.trim())
       errors.dietaryRestrictions = 'Please list dietary restrictions (or write "None")';
-    if (data.coachingInterest === 'in-person' && !data.inPersonPricingAcknowledged) {
-      errors.inPersonPricingAcknowledged =
-        'Please confirm you understand the pricing, 2x/week minimum, and location';
+    if (data.coachingInterest && !data.pricingAcknowledged) {
+      errors.pricingAcknowledged = 'Please confirm you understand the pricing and 2x/week minimum';
     }
   }
 
@@ -137,8 +136,8 @@ export default function CoachingForm() {
     <K extends keyof CoachingApplicationInput>(key: K, value: CoachingApplicationInput[K]) => {
       setForm((prev) => {
         const next = { ...prev, [key]: value };
-        if (key === 'coachingInterest' && value !== 'in-person') {
-          next.inPersonPricingAcknowledged = false;
+        if (key === 'coachingInterest' && value !== prev.coachingInterest) {
+          next.pricingAcknowledged = false;
         }
         return next;
       });
@@ -318,32 +317,24 @@ export default function CoachingForm() {
             )}
           </fieldset>
 
-          {form.coachingInterest === 'in-person' && (
+          {form.coachingInterest && (
             <div className="rounded-xl bg-[var(--color-taupe)]/15 border border-[var(--color-taupe)]/30 p-4 space-y-4">
               <p className="text-sm text-[var(--color-charcoal)] font-light leading-relaxed">
-                {application.inPersonAcknowledgement}
+                {application.pricingAcknowledgement[form.coachingInterest]}
               </p>
               <label className="form-option cursor-pointer">
                 <input
                   type="checkbox"
-                  checked={form.inPersonPricingAcknowledged ?? false}
-                  onChange={(e) => update('inPersonPricingAcknowledged', e.target.checked)}
+                  checked={form.pricingAcknowledged ?? false}
+                  onChange={(e) => update('pricingAcknowledged', e.target.checked)}
                 />
                 <span className="text-sm text-[var(--color-charcoal)] leading-relaxed">
-                  {application.inPersonCheckbox}
+                  {application.pricingCheckbox[form.coachingInterest]}
                 </span>
               </label>
-              {errors.inPersonPricingAcknowledged && (
-                <p className="form-error">{errors.inPersonPricingAcknowledged}</p>
+              {errors.pricingAcknowledged && (
+                <p className="form-error">{errors.pricingAcknowledged}</p>
               )}
-            </div>
-          )}
-
-          {form.coachingInterest === 'online' && (
-            <div className="rounded-xl bg-[var(--color-cream)] border border-black/8 p-4">
-              <p className="text-sm text-[var(--color-muted)] font-light leading-relaxed">
-                {application.onlineMessage}
-              </p>
             </div>
           )}
 

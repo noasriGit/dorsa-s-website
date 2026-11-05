@@ -17,14 +17,14 @@ const geistMono = Geist_Mono({
 });
 
 const description =
-  'In-person and virtual 1:1 training (2x/week minimum) and online coaching, focused on strength, fat loss, body recomposition, habits, and long-term results.';
+  "In-person training in Tyson's Corner, VA and virtual 1:1 training (2x/week minimum), focused on strength, fat loss, body recomposition, habits, and long-term results.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
-  title: 'Dorsa Wellness | In-Person & Online Fitness Coaching',
+  title: 'Dorsa Wellness | In-Person & Virtual Fitness Coaching',
   description,
   openGraph: {
-    title: 'Dorsa Wellness | In-Person & Online Fitness Coaching',
+    title: 'Dorsa Wellness | In-Person & Virtual Fitness Coaching',
     description,
     url: site.url,
     siteName: site.name,
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Dorsa Wellness | In-Person & Online Fitness Coaching',
+    title: 'Dorsa Wellness | In-Person & Virtual Fitness Coaching',
     description,
   },
   appleWebApp: {

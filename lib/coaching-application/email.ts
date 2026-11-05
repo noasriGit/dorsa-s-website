@@ -16,22 +16,13 @@ function formatDate(iso: string): string {
 
 function buildEmailHtml(data: CoachingApplicationPayload): string {
   const isInPerson = data.coachingInterest === 'in-person';
-  const isOnline = data.coachingInterest === 'online';
 
-  const interestExtras = isInPerson
-    ? `
-      <p><strong>Program:</strong> ${COACHING_INTEREST_LABELS['in-person']}</p>
-      <p><strong>Acknowledged in-person/virtual pricing and 2x/week minimum:</strong> ${data.inPersonPricingAcknowledged ? 'Yes' : 'No'}</p>
-      <p><strong>Location:</strong> Tyson's Corner, VA / Virtual</p>
+  const interestExtras = `
+      <p><strong>Program:</strong> ${COACHING_INTEREST_LABELS[data.coachingInterest]}</p>
+      <p><strong>Acknowledged pricing and 2x/week minimum:</strong> ${data.pricingAcknowledged ? 'Yes' : 'No'}</p>
+      <p><strong>Location:</strong> ${isInPerson ? "Tyson's Corner, VA" : 'Virtual'}</p>
       <p><strong>Minimum:</strong> 2x/week</p>
-    `
-    : isOnline
-      ? `
-      <p><strong>Program:</strong> ${COACHING_INTEREST_LABELS.online}</p>
-      <p><strong>Pricing shown publicly:</strong> Yes ($399/month)</p>
-      <p><strong>Needs follow-up/call:</strong> Yes</p>
-    `
-      : '';
+    `;
 
   return `
 <!DOCTYPE html>
