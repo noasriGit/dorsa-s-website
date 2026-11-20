@@ -6,8 +6,8 @@ export const site = {
     'Premium personal training in Tysons Corner, VA and live virtual 1:1 training with Dorsa, an ACE Certified Personal Trainer. Strength, fat loss, body recomposition and lasting habits, with a 2x/week minimum.',
   url: 'https://www.trainedbydorsa.com',
   location: 'Tysons Corner, VA',
-  instagram: 'https://www.instagram.com/dorsawellness/',
-  instagramHandle: '@dorsawellness',
+  instagram: 'https://www.instagram.com/trainedbydorsa/',
+  instagramHandle: '@trainedbydorsa',
   contactEmail:
     process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? 'daramideh@gmail.com',
   credit: { label: 'NV Digital Consulting', href: 'https://nvdigitalconsulting.com' },
