@@ -66,7 +66,7 @@ export function validateApplication(
 }
 
 export const COACHING_INTEREST_LABELS: Record<CoachingInterest, string> = {
-  'in-person': "In-person training (Tyson's Corner, VA) · 2x/week minimum",
+  'in-person': "In-person training (Tysons Corner, VA) · 2x/week minimum",
   virtual: 'Virtual 1:1 training · 2x/week minimum',
 };
 

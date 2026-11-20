@@ -3,122 +3,193 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { navLinks, site } from '@/lib/content';
+import { Logo } from '../brand/Logo';
 import Button from '../ui/Button';
 
-export default function Navbar() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [hasMounted, setHasMounted] = useState(false);
+const sectionIds = navLinks.map((l) => l.href.split('#')[1]);
 
+export default function Navbar() {
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState<string | null>(null);
+
+  // Solid → glass once the page scrolls.
   useEffect(() => {
-    setHasMounted(true);
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // Highlight the section currently in view.
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    const els = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => Boolean(el));
+    if (!els.length) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const id = entry.target.id;
+          if (entry.isIntersecting) setActive(id);
+          else setActive((prev) => (prev === id ? null : prev));
+        }
+      },
+      { rootMargin: '-45% 0px -50% 0px' }
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+
+  // Lock scroll + close on Escape / desktop resize while the menu is open.
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);
+    const mq = window.matchMedia('(min-width: 1024px)');
+    const onMq = () => mq.matches && setOpen(false);
+    window.addEventListener('keydown', onKey);
+    mq.addEventListener('change', onMq);
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = prev;
+      window.removeEventListener('keydown', onKey);
+      mq.removeEventListener('change', onMq);
     };
-  }, [menuOpen]);
+  }, [open]);
 
-  const isScrolled = hasMounted && scrolled;
-
-  const linkClass = isScrolled
-    ? 'text-[var(--color-muted)] hover:text-[var(--color-charcoal)]'
-    : 'text-white/85 hover:text-white';
-
-  const brandClass = isScrolled ? 'text-[var(--color-charcoal)]' : 'text-white';
-
-  const menuIconClass = isScrolled ? 'text-[var(--color-charcoal)]' : 'text-white';
+  const glass = scrolled || open;
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 pt-[env(safe-area-inset-top,0px)]">
-      <nav
-        className={`border-b backdrop-blur-md transition-colors duration-300 ${
-          isScrolled
-            ? 'bg-white/95 shadow-sm border-black/8'
-            : 'bg-transparent border-transparent'
+    <header className="fixed inset-x-0 top-0 z-50 pt-[env(safe-area-inset-top,0px)]">
+      <div
+        className={`absolute inset-0 -z-10 transition-[background-color,border-color,backdrop-filter] duration-500 border-b ${
+          glass
+            ? 'bg-ink/80 backdrop-blur-xl border-white/10'
+            : 'bg-ink border-transparent'
         }`}
-        aria-label="Main navigation"
-      >
-        <div className="section-container">
-          <div className="flex items-center justify-between h-16 lg:h-[4.5rem]">
-            <Link
-              href="/"
-              className={`text-lg sm:text-xl font-light tracking-tight shrink-0 ${brandClass}`}
-            >
-              {site.name}
-            </Link>
+        aria-hidden
+      />
+      <nav aria-label="Main" className="shell flex h-[var(--nav-h)] items-center justify-between gap-6">
+        <Link
+          href="/"
+          aria-label={`${site.name}, home`}
+          className="-m-2 p-2 text-white"
+          onClick={() => setOpen(false)}
+        >
+          <Logo title="" className="h-[30px] w-auto lg:h-[36px]" />
+        </Link>
 
-            <div className="hidden lg:flex items-center gap-8">
-              {navLinks.map((link) => (
+        <ul className="hidden items-center gap-9 lg:flex">
+          {navLinks.map((link) => {
+            const id = link.href.split('#')[1];
+            const isActive = active === id;
+            return (
+              <li key={link.href}>
                 <Link
-                  key={link.href}
                   href={link.href}
-                  className={`text-sm font-light tracking-wide transition-colors ${linkClass}`}
+                  aria-current={isActive ? 'true' : undefined}
+                  className={`group relative py-2 text-[0.7rem] font-medium uppercase tracking-[0.24em] transition-colors duration-300 ${
+                    isActive ? 'text-white' : 'text-white/60 hover:text-white'
+                  }`}
                 >
                   {link.label}
+                  <span
+                    aria-hidden
+                    className={`absolute -bottom-0.5 left-0 h-px bg-white transition-all duration-500 ease-[var(--ease-out-expo)] ${
+                      isActive ? 'w-full' : 'w-0 group-hover:w-full'
+                    }`}
+                  />
                 </Link>
-              ))}
-              <Button href="/#apply" className="!py-2.5 !px-5 !text-sm">
-                Apply for Coaching
-              </Button>
-            </div>
+              </li>
+            );
+          })}
+        </ul>
 
-            <div className="flex lg:hidden items-center gap-2">
-              <Link
-                href="/#apply"
-                className="inline-flex items-center justify-center min-h-[2.5rem] px-4 py-2 rounded-full text-xs font-medium bg-[var(--color-taupe)] text-[var(--color-charcoal)] border border-black/5"
-              >
-                Apply
-              </Link>
-              <button
-                type="button"
-                className={`p-2 -mr-2 min-h-[2.75rem] min-w-[2.75rem] flex items-center justify-center ${menuIconClass}`}
-                onClick={() => setMenuOpen(!menuOpen)}
-                aria-expanded={menuOpen}
-                aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-              >
-              {menuOpen ? (
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              ) : (
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              )}
-            </button>
-            </div>
-          </div>
+        <div className="flex items-center gap-3">
+          <Button href="/#apply" size="sm" className="max-[359px]:hidden" onClick={() => setOpen(false)}>
+            Apply Now
+          </Button>
+          <button
+            type="button"
+            className="relative -mr-2 flex h-11 w-11 items-center justify-center lg:hidden"
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            onClick={() => setOpen((v) => !v)}
+          >
+            <span
+              aria-hidden
+              className={`absolute h-px w-6 bg-white transition-transform duration-500 ease-[var(--ease-out-expo)] ${
+                open ? 'rotate-45' : '-translate-y-[4px]'
+              }`}
+            />
+            <span
+              aria-hidden
+              className={`absolute h-px w-6 bg-white transition-transform duration-500 ease-[var(--ease-out-expo)] ${
+                open ? '-rotate-45' : 'translate-y-[4px]'
+              }`}
+            />
+          </button>
         </div>
       </nav>
 
-      {menuOpen && (
-        <div className="lg:hidden fixed inset-0 top-16 bg-[var(--color-cream)] z-40 p-6 flex flex-col gap-4 overflow-y-auto pb-[calc(1.5rem+env(safe-area-inset-bottom))]">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              onClick={() => setMenuOpen(false)}
-              className="text-lg font-light text-[var(--color-charcoal)] py-2 border-b border-black/8"
-            >
-              {link.label}
-            </Link>
-          ))}
-          <Link
-            href="/#apply"
-            onClick={() => setMenuOpen(false)}
-            className="mt-4 inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-medium bg-[var(--color-taupe)] text-[var(--color-charcoal)] w-full text-center"
+      {/* Mobile menu */}
+      <div
+        id="mobile-menu"
+        className={`fixed inset-x-0 bottom-0 top-[calc(var(--nav-h)+env(safe-area-inset-top,0px))] bg-ink transition-[opacity,visibility] duration-500 lg:hidden ${
+          open ? 'visible opacity-100' : 'invisible opacity-0'
+        }`}
+        aria-hidden={!open}
+        inert={!open}
+      >
+        <div className="shell flex h-full flex-col justify-between overflow-y-auto pb-[calc(2rem+env(safe-area-inset-bottom,0px))] pt-8">
+          <ul className="border-t border-white/10">
+            {navLinks.map((link, i) => (
+              <li
+                key={link.href}
+                className={`border-b border-white/10 transition-all duration-700 ease-[var(--ease-out-expo)] ${
+                  open ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+                }`}
+                style={{ transitionDelay: open ? `${80 + i * 50}ms` : '0ms' }}
+              >
+                <Link
+                  href={link.href}
+                  onClick={() => setOpen(false)}
+                  className="flex items-baseline justify-between py-5 text-white"
+                >
+                  <span className="text-[2rem] font-light leading-none tracking-[-0.03em]">
+                    {link.label}
+                  </span>
+                  <span className="label tabular-nums text-white/40">0{i + 1}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+
+          <div
+            className={`mt-10 space-y-6 transition-all duration-700 ease-[var(--ease-out-expo)] ${
+              open ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+            }`}
+            style={{ transitionDelay: open ? '360ms' : '0ms' }}
           >
-            Apply for Coaching
-          </Link>
+            <Button href="/#apply" arrow className="w-full" onClick={() => setOpen(false)}>
+              Apply for Coaching
+            </Button>
+            <div className="flex items-center justify-between text-sm text-white/55">
+              <span>{site.location} · Virtual</span>
+              <a
+                href={site.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white/80 underline-offset-4 hover:underline"
+              >
+                {site.instagramHandle}
+              </a>
+            </div>
+          </div>
         </div>
-      )}
+      </div>
     </header>
   );
 }
