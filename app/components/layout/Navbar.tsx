@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type MouseEvent } from 'react';
 import { navLinks, site } from '@/lib/content';
 import { Logo } from '../brand/Logo';
 import Button from '../ui/Button';
@@ -60,6 +60,29 @@ export default function Navbar() {
 
   const glass = scrolled || open;
 
+  // The logo links to "/". On the home page that's the page you're already on, so
+  // Next doesn't scroll, and the logo only worked after a menu link had added a
+  // #section to the address. Scroll to the top ourselves (smooth unless reduced
+  // motion is on) and clear any #section. Cmd/Ctrl/Shift-clicks still open normally.
+  const goToTop = (event: MouseEvent<HTMLAnchorElement>) => {
+    setOpen(false);
+    if (
+      window.location.pathname !== '/' ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey
+    ) {
+      return;
+    }
+    event.preventDefault();
+    if (window.location.hash) {
+      window.history.replaceState(null, '', '/');
+    }
+    // Next frame: closing the mobile menu has restored page scrolling by then.
+    requestAnimationFrame(() => window.scrollTo({ top: 0 }));
+  };
+
   return (
     <header className="fixed inset-x-0 top-0 z-50 pt-[env(safe-area-inset-top,0px)]">
       <div
@@ -75,7 +98,7 @@ export default function Navbar() {
           href="/"
           aria-label={`${site.name}, home`}
           className="-m-2 p-2 text-white"
-          onClick={() => setOpen(false)}
+          onClick={goToTop}
         >
           <Logo title="" className="h-[30px] w-auto lg:h-[36px]" />
         </Link>
