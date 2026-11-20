@@ -30,6 +30,8 @@ export const metadata: Metadata = {
   title,
   description: site.description,
   applicationName: site.name,
+  // Every host (old domain, vercel.app, previews) points search engines at the main domain.
+  alternates: { canonical: '/' },
   openGraph: {
     title,
     description: site.description,
