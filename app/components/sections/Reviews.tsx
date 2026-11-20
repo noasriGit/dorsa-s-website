@@ -2,18 +2,8 @@ import Link from 'next/link';
 import { reviews } from '@/lib/content';
 import { Arrow } from '../ui/Button';
 import { delay } from '../ui/motion';
-
-function Stars({ count }: { count: number }) {
-  return (
-    <div className="flex gap-1" role="img" aria-label={`${count} out of 5 stars`}>
-      {Array.from({ length: count }).map((_, i) => (
-        <svg key={i} viewBox="0 0 20 20" className="h-3.5 w-3.5 fill-current" aria-hidden>
-          <path d="M10 1.5l2.6 5.6 6.1.7-4.5 4.2 1.2 6L10 15l-5.4 3 1.2-6L1.3 7.8l6.1-.7z" />
-        </svg>
-      ))}
-    </div>
-  );
-}
+import Stars from '../ui/Stars';
+import ReviewCarousel from './ReviewCarousel';
 
 export default function Reviews() {
   return (
@@ -44,12 +34,8 @@ export default function Reviews() {
         </div>
       </div>
 
-      {/* Mobile: swipeable row. Desktop: three columns. */}
-      <div className="scroll-row mt-14 flex snap-x snap-mandatory gap-4 overflow-x-auto px-[var(--gutter)] pb-2 lg:hidden">
-        {reviews.items.map((review) => (
-          <ReviewCard key={review.author} review={review} className="w-[86%] shrink-0 snap-center sm:w-[60%]" />
-        ))}
-      </div>
+      {/* Phones and tablets: swipeable compact previews. Desktop: three full reviews. */}
+      <ReviewCarousel items={reviews.items} />
       <div className="shell mt-20 hidden gap-6 lg:grid lg:grid-cols-3 xl:gap-8">
         {reviews.items.map((review, i) => (
           <div key={review.author} data-reveal style={delay(i * 120)}>

@@ -505,3 +505,14 @@
 .scroll-row::-webkit-scrollbar {
   display: none;
 }
+
+/* Review preview on phones and tablets: the first four lines, fading out. */
+.review-clamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, #000 50%, transparent);
+  mask-image: linear-gradient(to bottom, #000 50%, transparent);
+}
