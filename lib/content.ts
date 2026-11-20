@@ -103,7 +103,7 @@ export const services = [
     location: 'Remote · Live 1:1',
     tiers: [
       { name: '30-Minute Session', detail: 'Live 1:1 via video', price: '$65', unit: '/ session' },
-      { name: '45-Minute Session', detail: 'Live 1:1 via video', price: '$100', unit: '/ session' },
+      { name: '45-Minute Session', detail: 'Live 1:1 via video', price: '$95', unit: '/ session' },
     ],
     minimum: '2x / week minimum',
     description:
@@ -220,7 +220,7 @@ export const application = {
     'in-person':
       'In-person training in Tysons Corner, VA is $140/hr for 1:1, $90/person for partner training, or $45/person for semi-private training (3-4 people), with a 2x/week minimum. Please continue only if this works for your budget, schedule, and location.',
     virtual:
-      'Virtual 1:1 training is $65 for a 30-minute session or $100 for a 45-minute session, with a 2x/week minimum. Please continue only if this works for your budget and schedule.',
+      'Virtual 1:1 training is $65 for a 30-minute session or $95 for a 45-minute session, with a 2x/week minimum. Please continue only if this works for your budget and schedule.',
   },
   pricingCheckbox: {
     'in-person':
@@ -250,7 +250,7 @@ export const faq = {
     {
       question: 'What is your pricing like?',
       paragraphs: [
-        'In-person training in Tysons Corner, VA is $140/hr for 1:1, $90/person for partner training, and $45/person for semi-private training (3-4 people). Virtual 1:1 training is $65 for 30 minutes or $100 for 45 minutes. All training has a 2x/week minimum, and sessions are billed based on how many you train each month.',
+        'In-person training in Tysons Corner, VA is $140/hr for 1:1, $90/person for partner training, and $45/person for semi-private training (3-4 people). Virtual 1:1 training is $65 for 30 minutes or $95 for 45 minutes. All training has a 2x/week minimum, and sessions are billed based on how many you train each month.',
       ],
     },
     {
