@@ -1,79 +1,96 @@
 import Image from 'next/image';
 import { hero } from '@/lib/content';
+import { photos } from '@/lib/photos';
 import Button from '../ui/Button';
+import { introDelay } from '../ui/motion';
 
 export default function Hero() {
   return (
     <section
-      id="hero-section"
-      className="relative min-h-svh flex items-center bg-[var(--color-charcoal)] overflow-hidden"
+      id="top"
+      aria-labelledby="hero-title"
+      className="relative overflow-hidden bg-ink pt-[calc(var(--nav-h)+env(safe-area-inset-top,0px))] [container-type:inline-size]"
     >
-      <div className="absolute inset-0">
-        <Image
-          src="/images/heroimage.JPG"
-          alt="Dorsa Wellness personal training"
-          fill
-          className="object-cover object-[center_20%] opacity-60 lg:opacity-70"
-          priority
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-charcoal)]/90 via-[var(--color-charcoal)]/70 to-[var(--color-charcoal)]/40" />
-      </div>
+      <div className="lg:grid lg:min-h-[max(42rem,calc(100svh-var(--nav-h)))] lg:grid-cols-12">
+        {/* Portrait. Below desktop the frame is sized by its shape (4:5 phones, square
+            tablets) and capped by the screen height; on desktop it's never taller than
+            2:3 of its width (62.5cqw). Either way the whole pose always fits. */}
+        <div className="intro-photo relative mx-auto aspect-[4/5] w-[min(100%,calc((100svh-var(--nav-h))*0.8))] overflow-hidden sm:aspect-square sm:w-[min(100%,calc((100svh-var(--nav-h))*0.85))] lg:order-2 lg:col-span-5 lg:mx-0 lg:aspect-auto lg:max-h-[62.5cqw] lg:w-auto">
+          <Image
+            src={photos.lunge}
+            alt={hero.imageAlt}
+            fill
+            priority
+            placeholder="blur"
+            sizes="(min-width: 1024px) 42vw, 100vw"
+            className="object-cover object-[50%_85%] sm:object-[50%_70%]"
+          />
+          {/* Phones: short fade so only the floor (not Dorsa) blends into the black below. */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-ink via-ink/50 to-transparent sm:hidden"
+          />
+        </div>
 
-      <div className="section-container relative z-10 py-20 sm:py-24 lg:py-32">
-        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-          <div className="max-w-xl">
-            <p className="text-[var(--color-taupe)] text-sm sm:text-base font-medium tracking-widest uppercase mb-4">
-              Dorsa Wellness
+        {/* Copy */}
+        <div className="relative z-10 flex flex-col lg:order-1 lg:col-span-7">
+          <div className="-mt-10 flex flex-1 flex-col justify-center px-[var(--gutter)] pb-14 sm:mt-0 lg:py-20 lg:pl-[calc(max(0px,(100cqw-90rem)/2)+var(--gutter))] lg:pr-14 xl:pr-24">
+            {/* Desktop only: on phones the photo stays clear of text (location is in the row below). */}
+            <p className="eyebrow intro-rise hidden lg:inline-flex" style={introDelay(150)}>
+              {hero.eyebrow}
             </p>
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-light tracking-tight text-white leading-tight mb-5 sm:mb-6">
-              {hero.headline}
+
+            <h1
+              id="hero-title"
+              className="display-xl mt-7 max-w-[13ch] text-balance lg:mt-9"
+            >
+              <span className="intro-rise block" style={introDelay(260)}>
+                {hero.headline}
+              </span>
+              <span className="intro-rise accent mt-1 block" style={introDelay(380)}>
+                {hero.headlineAccent}
+              </span>
             </h1>
-            <p className="text-base sm:text-lg text-white/85 font-light leading-relaxed mb-7 sm:mb-8">
+
+            <p
+              className="lede intro-rise mt-7 max-w-[34rem] lg:mt-9"
+              style={introDelay(520)}
+            >
               {hero.subheadline}
             </p>
-            <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
-              <Button href="/#apply" className="w-full sm:w-auto justify-center">
+
+            <div
+              className="intro-rise mt-9 flex flex-col gap-3 sm:flex-row lg:mt-11"
+              style={introDelay(640)}
+            >
+              <Button href="/#apply" arrow>
                 {hero.primaryCta}
               </Button>
-              <Button href="/#transformations" variant="secondary" className="w-full sm:w-auto justify-center">
+              <Button href="/#services" variant="outline">
                 {hero.secondaryCta}
               </Button>
             </div>
           </div>
 
-          <div className="hidden lg:block relative aspect-[4/5] max-w-md ml-auto rounded-2xl overflow-hidden shadow-2xl border border-white/10">
-            <Image
-              src="/images/desktopHero.jpg"
-              alt="Dorsa, personal trainer"
-              fill
-              className="object-cover object-top"
-              sizes="(max-width: 1024px) 0vw, 400px"
-              priority
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-10 pb-[env(safe-area-inset-bottom,0px)]">
-        <a
-          href="#trust-intro"
-          className="scroll-hint flex flex-col items-center gap-2 text-white hover:text-white transition-colors"
-          aria-label="Scroll to continue"
-        >
-          <span className="text-xs sm:text-sm font-light tracking-wide opacity-50">
-            Scroll to Continue
-          </span>
-          <svg
-            className="w-7 h-7"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            aria-hidden
+          <dl
+            className="intro-rise grid grid-cols-3 border-t border-white/10 lg:pl-[calc(max(0px,(100cqw-90rem)/2)+var(--gutter))]"
+            style={introDelay(780)}
           >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-          </svg>
-        </a>
+            {hero.highlights.map((item, i) => (
+              <div
+                key={item.label}
+                className={`px-[var(--gutter)] py-6 lg:py-8 ${i > 0 ? 'border-l border-white/10' : ''} ${
+                  i === 0 ? 'lg:pl-0' : 'lg:px-8'
+                } max-sm:px-4 max-sm:first:pl-[var(--gutter)]`}
+              >
+                <dt className="label text-white/45">{item.label}</dt>
+                <dd className="mt-2.5 text-[0.85rem] leading-snug text-white/85 sm:text-[0.95rem]">
+                  {item.value}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </div>
       </div>
     </section>
   );

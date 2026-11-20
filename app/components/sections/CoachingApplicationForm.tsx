@@ -4,19 +4,20 @@ import dynamic from 'next/dynamic';
 
 function FormSkeleton() {
   return (
-    <div className="space-y-5" aria-hidden="true">
-      <div className="h-1.5 bg-black/8 rounded-full overflow-hidden">
-        <div className="h-full w-1/3 bg-[var(--color-taupe)]/40 rounded-full" />
+    <div className="space-y-8" aria-hidden="true">
+      <div className="space-y-3">
+        <div className="h-3 w-24 animate-pulse bg-white/10" />
+        <div className="h-px bg-white/10">
+          <div className="h-px w-1/3 bg-white/40" />
+        </div>
       </div>
-      <div className="space-y-4">
-        {Array.from({ length: 4 }).map((_, i) => (
-          <div key={i} className="space-y-2">
-            <div className="h-4 w-2/5 bg-black/8 rounded animate-pulse" />
-            <div className="h-12 bg-black/5 rounded-xl animate-pulse" />
-          </div>
-        ))}
-      </div>
-      <div className="h-12 bg-[var(--color-taupe)]/25 rounded-full animate-pulse" />
+      {Array.from({ length: 4 }).map((_, i) => (
+        <div key={i} className="space-y-3">
+          <div className="h-3.5 w-2/5 animate-pulse bg-white/10" />
+          <div className="h-[3.25rem] animate-pulse border border-white/10 bg-white/[0.03]" />
+        </div>
+      ))}
+      <div className="h-[3.25rem] w-40 animate-pulse bg-white/15" />
     </div>
   );
 }

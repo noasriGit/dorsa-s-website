@@ -15,6 +15,9 @@ export default function ScrollManager() {
       history.scrollRestoration = 'manual';
     }
 
+    // Capture phase so we run before next/link handles the click.
+    document.addEventListener('click', handleApplyLinkClick, true);
+
     const nav = performance.getEntriesByType('navigation')[0] as
       | PerformanceNavigationTiming
       | undefined;
@@ -24,15 +27,14 @@ export default function ScrollManager() {
       if (window.location.hash) {
         history.replaceState(null, '', window.location.pathname + window.location.search);
       }
-      return;
+    } else {
+      scrollToApplyFromHash();
     }
 
-    scrollToApplyFromHash();
     window.addEventListener('hashchange', scrollToApplyFromHash);
-    document.addEventListener('click', handleApplyLinkClick);
     return () => {
       window.removeEventListener('hashchange', scrollToApplyFromHash);
-      document.removeEventListener('click', handleApplyLinkClick);
+      document.removeEventListener('click', handleApplyLinkClick, true);
     };
   }, []);
 

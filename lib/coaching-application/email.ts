@@ -20,36 +20,36 @@ function buildEmailHtml(data: CoachingApplicationPayload): string {
   const interestExtras = `
       <p><strong>Program:</strong> ${COACHING_INTEREST_LABELS[data.coachingInterest]}</p>
       <p><strong>Acknowledged pricing and 2x/week minimum:</strong> ${data.pricingAcknowledged ? 'Yes' : 'No'}</p>
-      <p><strong>Location:</strong> ${isInPerson ? "Tyson's Corner, VA" : 'Virtual'}</p>
+      <p><strong>Location:</strong> ${isInPerson ? 'Tysons Corner, VA' : 'Virtual'}</p>
       <p><strong>Minimum:</strong> 2x/week</p>
     `;
 
   return `
 <!DOCTYPE html>
 <html>
-<body style="font-family: system-ui, sans-serif; color: #2c2c2c; line-height: 1.6; max-width: 600px;">
-  <h2 style="color: #2c2c2c; font-weight: 500;">New Coaching Application</h2>
+<body style="font-family: system-ui, sans-serif; color: #0a0a0a; line-height: 1.6; max-width: 600px;">
+  <h2 style="color: #0a0a0a; font-weight: 500; letter-spacing: 0.02em;">New Coaching Application</h2>
 
-  <div style="background: #faf8f5; padding: 16px; border-radius: 8px; margin-bottom: 24px;">
+  <div style="background: #f3f3f1; padding: 16px; border-radius: 8px; margin-bottom: 24px;">
     <p><strong>Submitted at:</strong> ${formatDate(data.submittedAt)}</p>
     <p><strong>Coaching interest:</strong> ${COACHING_INTEREST_LABELS[data.coachingInterest]}</p>
     <p><strong>Source page:</strong> ${data.sourcePage}</p>
   </div>
 
-  <h3 style="font-weight: 500; border-bottom: 1px solid #d9d4c7; padding-bottom: 8px;">Contact Info</h3>
+  <h3 style="font-weight: 500; border-bottom: 1px solid #dddddd; padding-bottom: 8px;">Contact Info</h3>
   <p><strong>Full Name:</strong> ${escapeHtml(data.fullName)}</p>
   <p><strong>Email:</strong> ${escapeHtml(data.email)}</p>
   <p><strong>Phone Number:</strong> ${escapeHtml(data.phone)}</p>
   <p><strong>How old are you?:</strong> ${escapeHtml(data.age)}</p>
   <p><strong>Instagram handle:</strong> ${data.instagram ? escapeHtml(data.instagram) : 'None'}</p>
 
-  <h3 style="font-weight: 500; border-bottom: 1px solid #d9d4c7; padding-bottom: 8px; margin-top: 24px;">Program & Goals</h3>
+  <h3 style="font-weight: 500; border-bottom: 1px solid #dddddd; padding-bottom: 8px; margin-top: 24px;">Program & Goals</h3>
   ${interestExtras}
   <p><strong>What is your main fitness goal?:</strong><br>${escapeHtml(data.fitnessGoal)}</p>
   <p><strong>Exercise history & injuries:</strong><br>${escapeHtml(data.exerciseHistory)}</p>
   <p><strong>Dietary restrictions:</strong><br>${escapeHtml(data.dietaryRestrictions)}</p>
 
-  <h3 style="font-weight: 500; border-bottom: 1px solid #d9d4c7; padding-bottom: 8px; margin-top: 24px;">Commitment & Investment</h3>
+  <h3 style="font-weight: 500; border-bottom: 1px solid #dddddd; padding-bottom: 8px; margin-top: 24px;">Commitment & Investment</h3>
   <p><strong>Are you ready to make change?:</strong> ${READY_TO_CHANGE_LABELS[data.readyToChange]}</p>
   <p><strong>Ready to invest financially?:</strong> ${READY_TO_INVEST_LABELS[data.readyToInvest]}</p>
 </body>
