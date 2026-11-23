@@ -14,6 +14,7 @@ export type CoachingApplicationInput = {
   availability: string;
   fitnessGoal: string;
   exerciseHistory: string;
+  healthConditions: string;
   readyToChange: ReadyToChange;
   readyToInvest: ReadyToInvest;
   pricingAcknowledged?: boolean;
@@ -53,6 +54,9 @@ export function validateApplication(
   if (!data.fitnessGoal?.trim()) errors.fitnessGoal = 'Please describe your main fitness goal';
   if (!data.exerciseHistory?.trim())
     errors.exerciseHistory = 'Please share your exercise history and any injuries';
+  if (!data.healthConditions?.trim())
+    errors.healthConditions =
+      'Please list any recent injuries, surgeries, or health conditions (or write "None")';
 
   if (data.coachingInterest && !data.pricingAcknowledged) {
     errors.pricingAcknowledged = 'Please confirm you understand the pricing and 2x/week minimum';

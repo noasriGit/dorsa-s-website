@@ -48,6 +48,7 @@ function buildEmailHtml(data: CoachingApplicationPayload): string {
   <p><strong>Available training times:</strong><br>${escapeMultiline(data.availability)}</p>
   <p><strong>What is your main fitness goal?:</strong><br>${escapeMultiline(data.fitnessGoal)}</p>
   <p><strong>Exercise history & injuries:</strong><br>${escapeMultiline(data.exerciseHistory)}</p>
+  <p><strong>Recent injuries, surgeries & health conditions:</strong><br>${escapeMultiline(data.healthConditions)}</p>
 
   <h3 style="font-weight: 500; border-bottom: 1px solid #dddddd; padding-bottom: 8px; margin-top: 24px;">Commitment & Investment</h3>
   <p><strong>Are you ready to make change?:</strong> ${READY_TO_CHANGE_LABELS[data.readyToChange]}</p>

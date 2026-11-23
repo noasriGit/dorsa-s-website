@@ -47,6 +47,7 @@ const emptyForm: CoachingApplicationInput = {
   availability: '',
   fitnessGoal: '',
   exerciseHistory: '',
+  healthConditions: '',
   readyToChange: '' as ReadyToChange,
   readyToInvest: '' as ReadyToInvest,
   pricingAcknowledged: false,
@@ -99,6 +100,9 @@ function validateStep(step: number, data: CoachingApplicationInput): Errors {
     if (!data.fitnessGoal.trim()) errors.fitnessGoal = 'Please describe your main fitness goal';
     if (!data.exerciseHistory.trim())
       errors.exerciseHistory = 'Please share your exercise history and any injuries';
+    if (!data.healthConditions.trim())
+      errors.healthConditions =
+        'Please list any recent injuries, surgeries, or health conditions (or write "None")';
   }
 
   if (step === 3) {
@@ -451,6 +455,25 @@ export default function CoachingForm() {
                 value={form.exerciseHistory}
                 onChange={(e) => update('exerciseHistory', e.target.value)}
                 {...errorProps('exerciseHistory', errors)}
+              />
+            </Field>
+
+            <Field
+              label="Please list any recent injuries, surgeries, or health conditions."
+              hint="Ex: knee surgery last year, lower back pain, asthma, high blood pressure, etc."
+              htmlFor="healthConditions"
+              error={errors.healthConditions}
+              required
+            >
+              <textarea
+                id="healthConditions"
+                name="healthConditions"
+                rows={3}
+                className="field-input resize-y"
+                placeholder='Write "None" if not applicable'
+                value={form.healthConditions}
+                onChange={(e) => update('healthConditions', e.target.value)}
+                {...errorProps('healthConditions', errors)}
               />
             </Field>
           </div>
