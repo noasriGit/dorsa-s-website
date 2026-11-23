@@ -11,9 +11,9 @@ export type CoachingApplicationInput = {
   age: string;
   instagram?: string;
   coachingInterest: CoachingInterest;
+  availability: string;
   fitnessGoal: string;
   exerciseHistory: string;
-  dietaryRestrictions: string;
   readyToChange: ReadyToChange;
   readyToInvest: ReadyToInvest;
   pricingAcknowledged?: boolean;
@@ -48,11 +48,11 @@ export function validateApplication(
 
   if (!Object.hasOwn(COACHING_INTEREST_LABELS, data.coachingInterest ?? ''))
     errors.coachingInterest = 'Please select a program';
+  if (!data.availability?.trim())
+    errors.availability = 'Please share the days and times you are available to train';
   if (!data.fitnessGoal?.trim()) errors.fitnessGoal = 'Please describe your main fitness goal';
   if (!data.exerciseHistory?.trim())
     errors.exerciseHistory = 'Please share your exercise history and any injuries';
-  if (!data.dietaryRestrictions?.trim())
-    errors.dietaryRestrictions = 'Please list dietary restrictions (or write "None")';
 
   if (data.coachingInterest && !data.pricingAcknowledged) {
     errors.pricingAcknowledged = 'Please confirm you understand the pricing and 2x/week minimum';

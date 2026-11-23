@@ -45,9 +45,9 @@ function buildEmailHtml(data: CoachingApplicationPayload): string {
 
   <h3 style="font-weight: 500; border-bottom: 1px solid #dddddd; padding-bottom: 8px; margin-top: 24px;">Program & Goals</h3>
   ${interestExtras}
-  <p><strong>What is your main fitness goal?:</strong><br>${escapeHtml(data.fitnessGoal)}</p>
-  <p><strong>Exercise history & injuries:</strong><br>${escapeHtml(data.exerciseHistory)}</p>
-  <p><strong>Dietary restrictions:</strong><br>${escapeHtml(data.dietaryRestrictions)}</p>
+  <p><strong>Available training times:</strong><br>${escapeMultiline(data.availability)}</p>
+  <p><strong>What is your main fitness goal?:</strong><br>${escapeMultiline(data.fitnessGoal)}</p>
+  <p><strong>Exercise history & injuries:</strong><br>${escapeMultiline(data.exerciseHistory)}</p>
 
   <h3 style="font-weight: 500; border-bottom: 1px solid #dddddd; padding-bottom: 8px; margin-top: 24px;">Commitment & Investment</h3>
   <p><strong>Are you ready to make change?:</strong> ${READY_TO_CHANGE_LABELS[data.readyToChange]}</p>
@@ -63,6 +63,11 @@ function escapeHtml(text: string): string {
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
+}
+
+// Keeps the line breaks people type in longer answers (e.g. one day per line).
+function escapeMultiline(text: string): string {
+  return escapeHtml(text).replace(/\r?\n/g, '<br>');
 }
 
 export async function sendApplicationEmail(

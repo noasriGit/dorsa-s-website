@@ -44,9 +44,9 @@ const emptyForm: CoachingApplicationInput = {
   age: '',
   instagram: '',
   coachingInterest: '' as CoachingInterest,
+  availability: '',
   fitnessGoal: '',
   exerciseHistory: '',
-  dietaryRestrictions: '',
   readyToChange: '' as ReadyToChange,
   readyToInvest: '' as ReadyToInvest,
   pricingAcknowledged: false,
@@ -69,6 +69,9 @@ const PROGRAM_SHORT_LABELS: Record<CoachingInterest, string> = {
   virtual: 'Virtual Training · Live 1:1',
 };
 
+const AVAILABILITY_EXAMPLES =
+  'Ex: weekday mornings before 9am, Tuesday and Thursday evenings, weekends, etc.';
+
 function validateStep(step: number, data: CoachingApplicationInput): Errors {
   const errors: Errors = {};
   const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -85,16 +88,17 @@ function validateStep(step: number, data: CoachingApplicationInput): Errors {
       errors.age = 'Enter a valid age';
   }
 
+  // Checked in on-screen order, so Continue focuses the first problem the visitor can see.
   if (step === 2) {
     if (!data.coachingInterest) errors.coachingInterest = 'Please select a program';
-    if (!data.fitnessGoal.trim()) errors.fitnessGoal = 'Please describe your main fitness goal';
-    if (!data.exerciseHistory.trim())
-      errors.exerciseHistory = 'Please share your exercise history and any injuries';
-    if (!data.dietaryRestrictions.trim())
-      errors.dietaryRestrictions = 'Please list dietary restrictions (or write "None")';
     if (data.coachingInterest && !data.pricingAcknowledged) {
       errors.pricingAcknowledged = 'Please confirm you understand the pricing and 2x/week minimum';
     }
+    if (!data.availability.trim())
+      errors.availability = 'Please share the days and times you are available to train';
+    if (!data.fitnessGoal.trim()) errors.fitnessGoal = 'Please describe your main fitness goal';
+    if (!data.exerciseHistory.trim())
+      errors.exerciseHistory = 'Please share your exercise history and any injuries';
   }
 
   if (step === 3) {
@@ -394,6 +398,28 @@ export default function CoachingForm() {
             )}
 
             <Field
+              label="What days and times are you available to train?"
+              hint={
+                form.coachingInterest === 'virtual'
+                  ? `${AVAILABILITY_EXAMPLES} Please include your time zone.`
+                  : AVAILABILITY_EXAMPLES
+              }
+              htmlFor="availability"
+              error={errors.availability}
+              required
+            >
+              <textarea
+                id="availability"
+                name="availability"
+                rows={3}
+                className="field-input resize-y"
+                value={form.availability}
+                onChange={(e) => update('availability', e.target.value)}
+                {...errorProps('availability', errors)}
+              />
+            </Field>
+
+            <Field
               label="What is your main fitness goal?"
               hint="Ex: muscle gain, fat loss, balanced lifestyle, etc."
               htmlFor="fitnessGoal"
@@ -425,24 +451,6 @@ export default function CoachingForm() {
                 value={form.exerciseHistory}
                 onChange={(e) => update('exerciseHistory', e.target.value)}
                 {...errorProps('exerciseHistory', errors)}
-              />
-            </Field>
-
-            <Field
-              label="Please list any dietary restrictions."
-              htmlFor="dietaryRestrictions"
-              error={errors.dietaryRestrictions}
-              required
-            >
-              <textarea
-                id="dietaryRestrictions"
-                name="dietaryRestrictions"
-                rows={3}
-                className="field-input resize-y"
-                placeholder='Write "None" if not applicable'
-                value={form.dietaryRestrictions}
-                onChange={(e) => update('dietaryRestrictions', e.target.value)}
-                {...errorProps('dietaryRestrictions', errors)}
               />
             </Field>
           </div>
